@@ -11,8 +11,8 @@ COPY . /app
 WORKDIR /app
 
 # Compile aplikasi Ktor (pastikan Anda sudah memiliki kode yang dikompilasi sebelumnya)
-#RUN ./gradlew build
-+RUNx /app/gradlew && /app/gradlew build
+#RUN chmod +x gradlew ./gradlew build
+RUN chmod +x /app/gradlew && /app/gradlew build
 
 # Port yang akan digunakan oleh aplikasi Ktor
 EXPOSE 8080
