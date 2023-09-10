@@ -18,4 +18,5 @@ fun Application.configureRouting() {
   configureRoleRoute()
   configureLeaveTypeRoute()
   configureAuthRoute()
+  configureLeaveDurationRoute()
 }
