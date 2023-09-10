@@ -6,7 +6,7 @@ COPY . /app
 
 WORKDIR /app
 
-RUN chmod +x /app/gradlew && cd app && /app/gradlew build
+RUN chmod +x /app/gradlew && /app/gradlew build
 
 EXPOSE 8080
 
