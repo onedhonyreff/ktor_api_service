@@ -1,5 +1,5 @@
 # Gunakan image base yang sesuai
-FROM openjdk:11
+FROM openjdk:17
 
 # Buat direktori aplikasi
 RUN mkdir /app
@@ -11,7 +11,8 @@ COPY . /app
 WORKDIR /app
 
 # Compile aplikasi Ktor (pastikan Anda sudah memiliki kode yang dikompilasi sebelumnya)
-RUN ./gradlew build
+#RUN ./gradlew build
++RUNx /app/gradlew && /app/gradlew build
 
 # Port yang akan digunakan oleh aplikasi Ktor
 EXPOSE 8080
