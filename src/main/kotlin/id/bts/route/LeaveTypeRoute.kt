@@ -70,6 +70,7 @@ fun Application.configureLeaveTypeRoute() {
         var name: String? = null
         var description: String? = null
         var defaultDuration: Int? = null
+        var note: String? = null
         var illustrationUrl: String? = null
 
         try {
@@ -100,6 +101,7 @@ fun Application.configureLeaveTypeRoute() {
                   "name" -> name = part.value
                   "description" -> description = part.value
                   "default_duration" -> defaultDuration = part.value.toInt()
+                  "note" -> note = part.value
                 }
               }
 
@@ -113,6 +115,7 @@ fun Application.configureLeaveTypeRoute() {
               set(it.name, name)
               set(it.description, description)
               set(it.defaultDuration, defaultDuration)
+              set(it.note, note)
               set(it.illustration, illustrationUrl)
             }
             if (affected == 0) {
@@ -148,6 +151,7 @@ fun Application.configureLeaveTypeRoute() {
         var name: String? = null
         var description: String? = null
         var defaultDuration: Int? = null
+        var note: String? = null
         var illustrationUrl: String? = null
 
         try {
@@ -178,6 +182,7 @@ fun Application.configureLeaveTypeRoute() {
                   "name" -> name = part.value
                   "description" -> description = part.value
                   "default_duration" -> defaultDuration = part.value.toInt()
+                  "note" -> note = part.value
                 }
               }
 
@@ -189,9 +194,10 @@ fun Application.configureLeaveTypeRoute() {
             val affected = database.update(LeaveTypeEntity) {
               initialName?.let { data -> set(it.initial_name, data) }
               name?.let { data -> set(it.name, data) }
-              description?.let { data -> set(it.description, data) }
-              defaultDuration?.let { data -> set(it.defaultDuration, data) }
+              set(it.description, description)
+              set(it.defaultDuration, defaultDuration)
               illustrationUrl?.let { data -> set(it.illustration, data) }
+              set(it.note, note)
               set(it.updatedAt, Instant.now())
               where {
                 (it.id eq leaveTypeId) and (it.deletedFlag neq true)
