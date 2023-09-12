@@ -11,10 +11,10 @@ import java.util.*
 object TokenManager {
   private val config = HoconApplicationConfig(ConfigFactory.load())
 
-  private val audience = config.property("audience").getString()
-  private val secret = config.property("secret").getString()
-  private val issuer = config.property("issuer").getString()
-  val realm = config.property("realm").getString()
+  private val audience = config.property("jwt_audience").getString()
+  private val secret = config.property("jwt_secret").getString()
+  private val issuer = config.property("jwt_issuer").getString()
+  val realm = config.property("jwt_realm").getString()
   private val expiration: Date
     get() {
       return Calendar.getInstance().also {

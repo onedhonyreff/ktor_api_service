@@ -26,7 +26,7 @@ fun Application.configureAuthRoute() {
       val registerRequest = try {
         call.receive<RegisterRequest>()
       } catch (e: Exception) {
-        returnParameterErrorResponse(e.message)
+        call.returnParameterErrorResponse(e.message)
         return@post
       }
 
@@ -37,7 +37,7 @@ fun Application.configureAuthRoute() {
           }.map { User.transform(it) }
 
           if (registeredUsersWithThisEmail.isNotEmpty()) {
-            returnParameterErrorResponse("User already exist, please try a different email")
+            call.returnParameterErrorResponse("User already exist, please try a different email")
             return@post
           }
 
@@ -56,7 +56,7 @@ fun Application.configureAuthRoute() {
           }.map { row ->
             val leaveTypeId = row[LeaveTypeEntity.id]
             val defaultDuration = row[LeaveTypeEntity.defaultDuration]
-            database.insert(LeaveDurationEntity) {
+            database.insert(LeaveAllowanceEntity) {
               set(it.userId, userId)
               set(it.leaveTypeId, leaveTypeId)
               set(it.duration, defaultDuration)
@@ -66,11 +66,11 @@ fun Application.configureAuthRoute() {
           val message = "User registered successfully"
           call.respond(BaseResponse(success = true, message = message, data = SimpleMessage(message)))
 
-        } ?: run { returnFailedDatabaseResponse() }
+        } ?: run { call.returnFailedDatabaseResponse() }
 
       } catch (e: Exception) {
         e.printStackTrace()
-        returnParameterErrorResponse(e.message)
+        call.returnParameterErrorResponse(e.message)
         return@post
       }
     }
@@ -79,7 +79,7 @@ fun Application.configureAuthRoute() {
       val loginRequest = try {
         call.receive<LoginRequest>()
       } catch (e: Exception) {
-        returnParameterErrorResponse(e.message)
+        call.returnParameterErrorResponse(e.message)
         return@post
       }
 
@@ -92,13 +92,13 @@ fun Application.configureAuthRoute() {
               (UserEntity.email eq loginRequest.email) and (UserEntity.deletedFlag neq true)
             }.orderBy(UserEntity.id.desc()).map { User.transform(it, true) }.firstOrNull()
           if (user == null) {
-            returnParameterErrorResponse("Email ${loginRequest.email} is not registered")
+            call.returnParameterErrorResponse("Email ${loginRequest.email} is not registered")
             return@post
           }
 
           val doesPasswordMatch = BCrypt.checkpw(loginRequest.password, user.password)
           if (!doesPasswordMatch) {
-            returnParameterErrorResponse("The password is incorrect")
+            call.returnParameterErrorResponse("The password is incorrect")
             return@post
           }
 
@@ -112,11 +112,11 @@ fun Application.configureAuthRoute() {
             )
           )
 
-        } ?: run { returnFailedDatabaseResponse() }
+        } ?: run { call.returnFailedDatabaseResponse() }
 
       } catch (e: Exception) {
         e.printStackTrace()
-        returnParameterErrorResponse(e.message)
+        call.returnParameterErrorResponse(e.message)
         return@post
       }
     }

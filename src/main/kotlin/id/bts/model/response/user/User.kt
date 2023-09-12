@@ -26,9 +26,9 @@ data class User(
   @SerialName("human_capital_management_id")
   val humanCapitalManagementId: String?,
   @SerialName("is_super_visor")
-  val isSuperVisor: Boolean = false,
+  val isSuperVisor: Boolean? = null,
   @SerialName("is_hcm")
-  val isHcm: Boolean = false,
+  val isHcm: Boolean? = null,
   @SerialName("created_at")
   val createdAt: String?,
   @SerialName("updated_at")

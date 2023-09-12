@@ -18,7 +18,7 @@ fun Application.configureFileRouting() {
       val file = File("assets/${mediaType}s/$contentType/$fileName")
 
       if (!file.exists()) {
-        returnNotFoundResponse()
+        call.returnNotFoundResponse()
       } else {
         when (fileAction) {
           "open" -> {
@@ -38,7 +38,7 @@ fun Application.configureFileRouting() {
           }
 
           else -> {
-            returnParameterErrorResponse("Second url parameter <${fileAction}> is not allowed. Make sure it is either <open> or <download>")
+            call.returnParameterErrorResponse("Second url parameter <${fileAction}> is not allowed. Make sure it is either <open> or <download>")
             return@get
           }
         }

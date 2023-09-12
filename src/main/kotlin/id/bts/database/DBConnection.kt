@@ -1,6 +1,7 @@
 package id.bts.database
 
 import org.ktorm.database.Database
+import org.ktorm.support.postgresql.PostgreSqlDialect
 
 object DBConnection {
   val database = try {
@@ -9,7 +10,8 @@ object DBConnection {
       url = "jdbc:postgresql:db_leave_app",
       driver = "org.postgresql.Driver",
       user = "postgres",
-      password = "dhony123"
+      password = "dhony123",
+      dialect = PostgreSqlDialect()
     )
 
     /* Online Server */

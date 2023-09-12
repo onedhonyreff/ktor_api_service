@@ -1,12 +1,11 @@
 package id.bts
 
-import id.bts.plugins.configureJWTTokenization
+import id.bts.plugins.configureJWTMiddleWare
 import id.bts.plugins.configureRouting
 import id.bts.plugins.configureSerialization
 import io.ktor.server.application.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
-import org.ktorm.database.Database
 
 fun main() {
   embeddedServer(Netty, port = 8080, host = "0.0.0.0", module = Application::module)
@@ -14,7 +13,7 @@ fun main() {
 }
 
 fun Application.module() {
-  configureJWTTokenization()
+  configureJWTMiddleWare()
   configureSerialization()
   configureRouting()
 }
