@@ -3,10 +3,13 @@ package id.bts.route
 import id.bts.database.DBConnection
 import id.bts.entities.LeaveAllowanceEntity
 import id.bts.entities.LeaveTypeEntity
+import id.bts.entities.UserEntity
 import id.bts.model.request.leave_allowance.LeaveAllowanceRequest
 import id.bts.model.response.BaseResponse
 import id.bts.model.response.leave_allowance.LeaveAllowance
+import id.bts.model.response.leave_type.LeaveType
 import id.bts.model.response.simple_message.SimpleMessage
+import id.bts.utils.Extensions.receivePagingRequest
 import id.bts.utils.Extensions.returnFailedDatabaseResponse
 import id.bts.utils.Extensions.returnNotFoundResponse
 import id.bts.utils.Extensions.returnNotImplementedResponse
@@ -17,7 +20,6 @@ import io.ktor.server.auth.jwt.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import io.ktor.util.pipeline.*
 import kotlinx.coroutines.runBlocking
 import org.ktorm.dsl.*
 import java.time.Instant
@@ -25,18 +27,18 @@ import java.time.Instant
 fun Application.configureLeaveAllowanceRoute() {
   routing {
     authenticate("user-authorization") {
-      get("/my-leave-allowances") {
+      post("/my-leave-allowances") {
         val userId = try {
           call.principal<JWTPrincipal>()!!.payload.getClaim("id").asString().toInt()
         } catch (e: Exception) {
           call.returnParameterErrorResponse(e.message)
-          return@get
+          return@post
         }
 
-        getUserLeaveAllowanceList(userId)
+        call.getUserLeaveAllowanceList(userId)
       }
 
-      get("/my-leave-allowances") {
+      get("/my-leave-allowance") {
         val userId = try {
           call.principal<JWTPrincipal>()!!.payload.getClaim("id").asString().toInt()
         } catch (e: Exception) {
@@ -51,18 +53,18 @@ fun Application.configureLeaveAllowanceRoute() {
           return@get
         }
 
-        getUserLeaveAllowance(userId, leaveTypeId)
+        call.getUserLeaveAllowance(userId, leaveTypeId)
       }
 
-      get("/leave-allowances") {
+      post("/leave-allowances") {
         val userId = try {
           call.request.queryParameters["user_id"]!!.toInt()
         } catch (e: Exception) {
           call.returnParameterErrorResponse(e.message)
-          return@get
+          return@post
         }
 
-        getUserLeaveAllowanceList(userId)
+        call.getUserLeaveAllowanceList(userId, true)
       }
 
       get("/leave-allowance") {
@@ -80,7 +82,7 @@ fun Application.configureLeaveAllowanceRoute() {
           return@get
         }
 
-        getUserLeaveAllowance(userId, leaveTypeId)
+        call.getUserLeaveAllowance(userId, leaveTypeId, true)
       }
     }
 
@@ -94,11 +96,34 @@ fun Application.configureLeaveAllowanceRoute() {
         }
 
         DBConnection.database?.let { database ->
-          val affected = database.insert(LeaveAllowanceEntity) {
-            set(it.userId, leaveAllowanceRequest.userId)
-            set(it.leaveTypeId, leaveAllowanceRequest.leaveTypeId)
-            set(it.duration, leaveAllowanceRequest.duration)
+          val existingLeaveAllowance = database.from(LeaveAllowanceEntity).select().where {
+            (LeaveAllowanceEntity.userId eq leaveAllowanceRequest.userId) and
+              (LeaveAllowanceEntity.leaveTypeId eq leaveAllowanceRequest.leaveTypeId) and
+              (LeaveAllowanceEntity.deletedFlag neq true)
+          }.totalRecordsInAllPages
+
+          if (existingLeaveAllowance > 0) {
+            call.returnParameterErrorResponse("Leave allowance data already exist")
+            return@post
           }
+
+          val leaveType = database.from(LeaveTypeEntity).select().where {
+            (LeaveTypeEntity.id eq leaveAllowanceRequest.leaveTypeId) and (LeaveTypeEntity.deletedFlag neq true)
+          }.orderBy(LeaveTypeEntity.id.desc()).map { LeaveType.transform(it) }.firstOrNull()
+
+          val duration = leaveAllowanceRequest.duration ?: leaveType?.defaultDuration
+
+          val affected = try {
+            database.insert(LeaveAllowanceEntity) {
+              set(it.userId, leaveAllowanceRequest.userId)
+              set(it.leaveTypeId, leaveAllowanceRequest.leaveTypeId)
+              set(it.duration, duration)
+            }
+          } catch (e: Exception) {
+            call.returnNotImplementedResponse(e.message)
+            return@post
+          }
+
           if (affected == 0) {
             call.returnNotImplementedResponse()
           } else {
@@ -169,36 +194,50 @@ fun Application.configureLeaveAllowanceRoute() {
   }
 }
 
-fun PipelineContext<Unit, ApplicationCall>.getUserLeaveAllowanceList(userId: Int) {
+fun ApplicationCall.getUserLeaveAllowanceList(userId: Int, includeUser: Boolean = false) {
   runBlocking {
+    val pagingRequest = receivePagingRequest()
     DBConnection.database?.let { database ->
       val userLeaveAllowances = database.from(LeaveAllowanceEntity)
+        .leftJoin(UserEntity, on = UserEntity.id eq LeaveAllowanceEntity.userId)
         .leftJoin(LeaveTypeEntity, on = LeaveTypeEntity.id eq LeaveAllowanceEntity.leaveTypeId)
-        .select().where {
+        .select().limit(pagingRequest.size).offset(pagingRequest.pagingOffset).where {
           (LeaveAllowanceEntity.userId eq userId) and (LeaveAllowanceEntity.deletedFlag neq true)
-        }.orderBy(LeaveAllowanceEntity.id.desc()).map { LeaveAllowance.transform(it, includeUser = false) }
+        }.orderBy(LeaveAllowanceEntity.id.desc()).map { LeaveAllowance.transform(it, includeUser = includeUser) }
       val message = "User leave allowance list data fetched successfully"
-      call.respond(BaseResponse(success = true, message = message, data = userLeaveAllowances))
-    } ?: run { call.returnFailedDatabaseResponse() }
+      respond(
+        BaseResponse(
+          success = true,
+          message = message,
+          data = userLeaveAllowances,
+          totalData = userLeaveAllowances.size
+        )
+      )
+    } ?: run { returnFailedDatabaseResponse() }
   }
 }
 
-fun PipelineContext<Unit, ApplicationCall>.getUserLeaveAllowance(userId: Int, leaveTypeId: Int) {
+fun ApplicationCall.getUserLeaveAllowance(
+  userId: Int,
+  leaveTypeId: Int,
+  includeUser: Boolean = false
+) {
   runBlocking {
     DBConnection.database?.let { database ->
       database.from(LeaveAllowanceEntity)
+        .leftJoin(UserEntity, on = UserEntity.id eq LeaveAllowanceEntity.userId)
         .leftJoin(LeaveTypeEntity, on = LeaveTypeEntity.id eq LeaveAllowanceEntity.leaveTypeId)
         .select().where {
           (LeaveAllowanceEntity.userId eq userId) and
-            (LeaveTypeEntity.id eq leaveTypeId) and
+            (LeaveAllowanceEntity.leaveTypeId eq leaveTypeId) and
             (LeaveAllowanceEntity.deletedFlag neq true)
         }
         .orderBy(LeaveAllowanceEntity.id.desc())
-        .map { LeaveAllowance.transform(it, includeUser = false) }
+        .map { LeaveAllowance.transform(it, includeUser = includeUser) }
         .firstOrNull()?.let { userLeaveAllowance ->
           val message = "User leave allowance data fetched successfully"
-          call.respond(BaseResponse(success = true, message = message, data = userLeaveAllowance))
-        } ?: run { call.returnNotFoundResponse() }
-    } ?: run { call.returnFailedDatabaseResponse() }
+          respond(BaseResponse(success = true, message = message, data = userLeaveAllowance))
+        } ?: run { returnNotFoundResponse() }
+    } ?: run { returnFailedDatabaseResponse() }
   }
 }

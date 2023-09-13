@@ -6,8 +6,8 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class LeaveAllowanceRequest(
   @SerialName("user_id")
-  val userId: Int?,
+  val userId: Int,
   @SerialName("leave_type_id")
-  val leaveTypeId: Int?,
-  val duration: Int?
+  val leaveTypeId: Int,
+  val duration: Int? = null
 )

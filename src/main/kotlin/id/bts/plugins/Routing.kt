@@ -19,4 +19,5 @@ fun Application.configureRouting() {
   configureLeaveTypeRoute()
   configureAuthRoute()
   configureLeaveAllowanceRoute()
+  configureTokenRoute()
 }
