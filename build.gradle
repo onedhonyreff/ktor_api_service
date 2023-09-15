@@ -26,6 +26,7 @@ dependencies {
     implementation "org.ktorm:ktorm-core:$ktorm_version"
     implementation "org.postgresql:postgresql:$postgresql_version"
     implementation "org.ktorm:ktorm-support-postgresql:$ktorm_version"
+    implementation "org.ktorm:ktorm-support-mysql:$ktorm_version"
     implementation "org.mindrot:jbcrypt:$jbcrypt_version"
     implementation "ch.qos.logback:logback-classic:$logback_version"
     testImplementation "io.ktor:ktor-server-tests-jvm"

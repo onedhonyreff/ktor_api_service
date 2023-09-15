@@ -12,8 +12,6 @@ import id.bts.model.response.user.User
 import id.bts.utils.Extensions.returnFailedDatabaseResponse
 import id.bts.utils.Extensions.returnParameterErrorResponse
 import io.ktor.server.application.*
-import io.ktor.server.auth.*
-import io.ktor.server.auth.jwt.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
@@ -90,7 +88,7 @@ fun Application.configureAuthRoute() {
             .leftJoin(HumanCapitalManagementEntity, on = HumanCapitalManagementEntity.userId eq UserEntity.id)
             .select().where {
               (UserEntity.email eq loginRequest.email) and (UserEntity.deletedFlag neq true)
-            }.orderBy(UserEntity.id.desc()).map { User.transform(it, true) }.firstOrNull()
+            }.orderBy(UserEntity.id.desc()).map { User.transform(it, includeSecret = true) }.firstOrNull()
           if (user == null) {
             call.returnParameterErrorResponse("Email ${loginRequest.email} is not registered")
             return@post
@@ -118,22 +116,6 @@ fun Application.configureAuthRoute() {
         e.printStackTrace()
         call.returnParameterErrorResponse(e.message)
         return@post
-      }
-    }
-
-    authenticate("user-authorization") {
-      get("/me") {
-        call.principal<JWTPrincipal>()?.let { principal ->
-          val email = principal.payload.getClaim("email").asString()
-          val name = principal.payload.getClaim("name").asString()
-          call.respond(
-            BaseResponse(
-              success = true,
-              message = "Hello",
-              data = SimpleMessage("Email: $email, Name: $name")
-            )
-          )
-        }
       }
     }
   }

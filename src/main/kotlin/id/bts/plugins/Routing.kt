@@ -20,4 +20,8 @@ fun Application.configureRouting() {
   configureAuthRoute()
   configureLeaveAllowanceRoute()
   configureTokenRoute()
+  configureHCMRoute()
+  configureSuperVisorRoute()
+  configureUserRoute()
+  configureLeaveRequestRoute()
 }

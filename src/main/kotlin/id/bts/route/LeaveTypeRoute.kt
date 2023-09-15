@@ -11,7 +11,7 @@ import id.bts.utils.Extensions.returnFailedDatabaseResponse
 import id.bts.utils.Extensions.returnNotFoundResponse
 import id.bts.utils.Extensions.returnNotImplementedResponse
 import id.bts.utils.Extensions.returnParameterErrorResponse
-import id.bts.utils.ProjectUtil
+import id.bts.utils.ProjectUtils
 import io.ktor.http.content.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
@@ -82,7 +82,7 @@ fun Application.configureLeaveTypeRoute() {
                     val inputStream = part.streamProvider()
                     val filename = part.originalFileName.replaceFileName()
 
-                    val directory = File("${ProjectUtil.getProjectDir()}/assets/images/leave_type")
+                    val directory = File("${ProjectUtils.getProjectDir()}/assets/images/leave_type")
                     if (!directory.exists()) {
                       directory.mkdir()
                     }
@@ -163,7 +163,7 @@ fun Application.configureLeaveTypeRoute() {
                     val inputStream = part.streamProvider()
                     val filename = part.originalFileName.replaceFileName()
 
-                    val directory = File("${ProjectUtil.getProjectDir()}/assets/images/leave_type")
+                    val directory = File("${ProjectUtils.getProjectDir()}/assets/images/leave_type")
                     if (!directory.exists()) {
                       directory.mkdir()
                     }

@@ -17,14 +17,16 @@ data class Division(
   val deletedAt: String?
 ) {
   companion object {
-    fun transform(queryRowSet: QueryRowSet): Division {
-      return Division(
-        id = queryRowSet[DivisionEntity.id].toString(),
-        name = queryRowSet[DivisionEntity.name],
-        createdAt = queryRowSet[DivisionEntity.createdAt].toString(),
-        updatedAt = queryRowSet[DivisionEntity.updatedAt].toString(),
-        deletedAt = queryRowSet[DivisionEntity.deletedAt].toString()
-      )
+    fun transform(queryRowSet: QueryRowSet, divisionEntity: DivisionEntity = DivisionEntity): Division? {
+      return queryRowSet[divisionEntity.id]?.toString()?.let {
+        Division(
+          id = it,
+          name = queryRowSet[divisionEntity.name],
+          createdAt = queryRowSet[divisionEntity.createdAt].toString(),
+          updatedAt = queryRowSet[divisionEntity.updatedAt].toString(),
+          deletedAt = queryRowSet[divisionEntity.deletedAt].toString()
+        )
+      }
     }
   }
 }

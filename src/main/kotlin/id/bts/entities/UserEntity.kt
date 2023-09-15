@@ -2,7 +2,9 @@ package id.bts.entities
 
 import org.ktorm.schema.*
 
-object UserEntity : Table<Nothing>("users") {
+open class UserEntity(alias: String?) : Table<Nothing>("users", alias) {
+  override fun aliased(alias: String) = UserEntity(alias)
+
   val id = int("id").primaryKey()
   val email = varchar("email")
   val password = varchar("password")
@@ -17,4 +19,8 @@ object UserEntity : Table<Nothing>("users") {
   val updatedAt = timestamp("updated_at")
   val deletedAt = timestamp("deleted_at")
   val deletedFlag = boolean("deleted_flag")
+
+  companion object : UserEntity(null) {
+    const val HCM_USER_ALIAS = "hcm_user_alias"
+  }
 }

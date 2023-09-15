@@ -32,9 +32,9 @@ fun Application.configureDivisionRoute() {
         DBConnection.database?.let { database ->
           database.from(DivisionEntity).select().where {
             (DivisionEntity.id eq divisionId) and (DivisionEntity.deletedFlag neq true)
-          }.map { Division.transform(it) }.firstOrNull()?.let { note ->
+          }.map { Division.transform(it) }.firstOrNull()?.let { data ->
             val message = "Single data fetched successfully"
-            call.respond(BaseResponse(success = true, message = message, data = note))
+            call.respond(BaseResponse(success = true, message = message, data = data))
           } ?: run { call.returnNotFoundResponse() }
         } ?: run { call.returnFailedDatabaseResponse() }
       }
@@ -45,7 +45,7 @@ fun Application.configureDivisionRoute() {
           val divisions = database.from(DivisionEntity)
             .select().limit(pagingRequest.size).offset(pagingRequest.pagingOffset).where {
               DivisionEntity.deletedFlag neq true
-            }.orderBy(DivisionEntity.id.desc()).map { Division.transform(it) }
+            }.orderBy(DivisionEntity.id.desc()).map { Division.transform(it) }.filterNotNull()
           val message = "List data fetched successfully"
           call.respond(BaseResponse(success = true, message = message, data = divisions, totalData = divisions.size))
         } ?: run { call.returnFailedDatabaseResponse() }

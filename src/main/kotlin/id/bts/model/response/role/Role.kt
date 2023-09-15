@@ -17,14 +17,16 @@ data class Role(
   val deletedAt: String?
 ) {
   companion object {
-    fun transform(queryRowSet: QueryRowSet): Role {
-      return Role(
-        id = queryRowSet[RoleEntity.id].toString(),
-        name = queryRowSet[RoleEntity.name],
-        createdAt = queryRowSet[RoleEntity.createdAt].toString(),
-        updatedAt = queryRowSet[RoleEntity.updatedAt].toString(),
-        deletedAt = queryRowSet[RoleEntity.deletedAt].toString()
-      )
+    fun transform(queryRowSet: QueryRowSet, roleEntity: RoleEntity = RoleEntity): Role? {
+      return queryRowSet[roleEntity.id]?.toString()?.let {
+        Role(
+          id = it,
+          name = queryRowSet[roleEntity.name],
+          createdAt = queryRowSet[roleEntity.createdAt].toString(),
+          updatedAt = queryRowSet[roleEntity.updatedAt].toString(),
+          deletedAt = queryRowSet[roleEntity.deletedAt].toString()
+        )
+      }
     }
   }
 }

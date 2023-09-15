@@ -32,9 +32,9 @@ fun Application.configureRoleRoute() {
         DBConnection.database?.let { database ->
           database.from(RoleEntity).select().where {
             (RoleEntity.id eq roleId) and (RoleEntity.deletedFlag neq true)
-          }.map { Role.transform(it) }.firstOrNull()?.let { note ->
+          }.map { Role.transform(it) }.firstOrNull()?.let { data ->
             val message = "Single data fetched successfully"
-            call.respond(BaseResponse(success = true, message = message, data = note))
+            call.respond(BaseResponse(success = true, message = message, data = data))
           } ?: run { call.returnNotFoundResponse() }
         } ?: run { call.returnFailedDatabaseResponse() }
       }
@@ -45,7 +45,7 @@ fun Application.configureRoleRoute() {
           val roles = database.from(RoleEntity)
             .select().limit(pagingRequest.size).offset(pagingRequest.pagingOffset).where {
               RoleEntity.deletedFlag neq true
-            }.orderBy(RoleEntity.id.desc()).map { Role.transform(it) }
+            }.orderBy(RoleEntity.id.desc()).map { Role.transform(it) }.filterNotNull()
           val message = "List data fetched successfully"
           call.respond(
             BaseResponse(success = true, message = message, data = roles, totalData = roles.size)
