@@ -1,8 +1,9 @@
 package id.bts.model.response.user
 
-import id.bts.entities.HumanCapitalManagementEntity
-import id.bts.entities.SuperVisorEntity
-import id.bts.entities.UserEntity
+import id.bts.entities.*
+import id.bts.model.response.department.Department
+import id.bts.model.response.division.Division
+import id.bts.model.response.role.Role
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import org.ktorm.dsl.QueryRowSet
@@ -19,16 +20,21 @@ data class User(
   val nip: String?,
   @SerialName("role_id")
   val roleId: String?,
+  val role: Role? = null,
   @SerialName("division_id")
   val divisionId: String?,
+  val division: Division? = null,
   @SerialName("department_id")
   val departmentId: String?,
+  val department: Department? = null,
   @SerialName("human_capital_management_id")
   val humanCapitalManagementId: String?,
+  @SerialName("human_capital_management")
+  val humanCapitalManagement: HCM? = null,
   @SerialName("is_super_visor")
-  val isSuperVisor: Boolean = false,
+  val isSuperVisor: Boolean? = null,
   @SerialName("is_hcm")
-  val isHcm: Boolean = false,
+  val isHcm: Boolean? = null,
   @SerialName("created_at")
   val createdAt: String?,
   @SerialName("updated_at")
@@ -41,23 +47,45 @@ data class User(
       return BCrypt.hashpw(password, BCrypt.gensalt())
     }
 
-    fun transform(queryRowSet: QueryRowSet, includeSecret: Boolean = false): User {
+    fun transform(
+      queryRowSet: QueryRowSet,
+      includeSecret: Boolean = false,
+      includeHcm: Boolean = true,
+      userEntity: UserEntity = UserEntity,
+      roleEntity: RoleEntity = RoleEntity,
+      divisionEntity: DivisionEntity = DivisionEntity,
+      departmentEntity: DepartmentEntity = DepartmentEntity,
+      superVisorRelationEntity: SuperVisorEntity = SuperVisorEntity,
+      hcmRelationEntity: HumanCapitalManagementEntity = HumanCapitalManagementEntity
+    ): User {
       return User(
-        id = queryRowSet[UserEntity.id]!!.toString(),
-        email = queryRowSet[UserEntity.email]!!,
-        password = if (includeSecret) queryRowSet[UserEntity.password] else null,
-        name = queryRowSet[UserEntity.name]!!,
-        photo = queryRowSet[UserEntity.photo],
-        nip = queryRowSet[UserEntity.nip],
-        roleId = queryRowSet[UserEntity.roleId].toString(),
-        divisionId = queryRowSet[UserEntity.divisionId].toString(),
-        departmentId = queryRowSet[UserEntity.departmentId].toString(),
-        humanCapitalManagementId = queryRowSet[UserEntity.humanCapitalManagementId].toString(),
-        isSuperVisor = queryRowSet[SuperVisorEntity.id] != null,
-        isHcm = queryRowSet[HumanCapitalManagementEntity.id] != null,
-        createdAt = queryRowSet[UserEntity.createdAt].toString(),
-        updatedAt = queryRowSet[UserEntity.updatedAt].toString(),
-        deletedAt = queryRowSet[UserEntity.deletedAt].toString()
+        id = queryRowSet[userEntity.id]!!.toString(),
+        email = queryRowSet[userEntity.email]!!,
+        password = if (includeSecret) queryRowSet[userEntity.password] else null,
+        name = queryRowSet[userEntity.name]!!,
+        photo = queryRowSet[userEntity.photo],
+        nip = queryRowSet[userEntity.nip],
+        roleId = queryRowSet[userEntity.roleId].toString(),
+        role = Role.transform(queryRowSet, roleEntity = roleEntity),
+        divisionId = queryRowSet[userEntity.divisionId].toString(),
+        division = Division.transform(queryRowSet, divisionEntity = divisionEntity),
+        departmentId = queryRowSet[userEntity.departmentId].toString(),
+        department = Department.transform(queryRowSet, departmentEntity = departmentEntity),
+        humanCapitalManagementId = queryRowSet[userEntity.humanCapitalManagementId].toString(),
+        humanCapitalManagement = if (includeHcm) HCM.transform(
+          queryRowSet,
+          userEntity = UserEntity.aliased(UserEntity.HCM_USER_ALIAS),
+          roleEntity = RoleEntity.aliased(RoleEntity.HCM_ROLE_ALIAS),
+          divisionEntity = DivisionEntity.aliased(DivisionEntity.HCM_DIVISION_ALIAS),
+          departmentEntity = DepartmentEntity.aliased(DepartmentEntity.HCM_DEPARTMENT_ALIAS),
+          superVisorRelationEntity = SuperVisorEntity.aliased(SuperVisorEntity.HCM_SV_RELATION_ALIAS),
+          hcmRelationEntity = HumanCapitalManagementEntity.aliased(HumanCapitalManagementEntity.HCM_HCM_RELATION_ALIAS)
+        ) else null,
+        isSuperVisor = queryRowSet[superVisorRelationEntity.id] != null,
+        isHcm = queryRowSet[hcmRelationEntity.id] != null,
+        createdAt = queryRowSet[userEntity.createdAt].toString(),
+        updatedAt = queryRowSet[userEntity.updatedAt].toString(),
+        deletedAt = queryRowSet[userEntity.deletedAt].toString()
       )
     }
   }

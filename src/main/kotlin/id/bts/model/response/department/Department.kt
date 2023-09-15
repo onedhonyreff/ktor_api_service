@@ -17,14 +17,16 @@ data class Department(
   val deletedAt: String?
 ) {
   companion object {
-    fun transform(queryRowSet: QueryRowSet): Department {
-      return Department(
-        id = queryRowSet[DepartmentEntity.id].toString(),
-        name = queryRowSet[DepartmentEntity.name],
-        createdAt = queryRowSet[DepartmentEntity.createdAt].toString(),
-        updatedAt = queryRowSet[DepartmentEntity.updatedAt].toString(),
-        deletedAt = queryRowSet[DepartmentEntity.deletedAt].toString()
-      )
+    fun transform(queryRowSet: QueryRowSet, departmentEntity: DepartmentEntity = DepartmentEntity): Department? {
+      return queryRowSet[departmentEntity.id]?.toString()?.let {
+        Department(
+          id = it,
+          name = queryRowSet[departmentEntity.name],
+          createdAt = queryRowSet[departmentEntity.createdAt].toString(),
+          updatedAt = queryRowSet[departmentEntity.updatedAt].toString(),
+          deletedAt = queryRowSet[departmentEntity.deletedAt].toString()
+        )
+      }
     }
   }
 }

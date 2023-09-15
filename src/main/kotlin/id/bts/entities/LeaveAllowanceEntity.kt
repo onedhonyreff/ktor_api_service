@@ -5,7 +5,7 @@ import org.ktorm.schema.boolean
 import org.ktorm.schema.int
 import org.ktorm.schema.timestamp
 
-object LeaveDurationEntity : Table<Nothing>("leave_durations") {
+object LeaveAllowanceEntity : Table<Nothing>("leave_durations") {
   val id = int("id").primaryKey()
   val userId = int("user_id")
   val leaveTypeId = int("leave_type_id")

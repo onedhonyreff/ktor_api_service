@@ -1,46 +1,56 @@
 package id.bts.utils
 
+import id.bts.model.request.PagingRequest
 import id.bts.model.response.BaseResponse
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.jwt.*
+import io.ktor.server.request.*
 import io.ktor.server.response.*
-import io.ktor.util.pipeline.*
 import kotlinx.coroutines.runBlocking
 
 object Extensions {
-  fun PipelineContext<Unit, ApplicationCall>.returnFailedDatabaseResponse(message: String? = null) {
+  fun ApplicationCall.returnFailedDatabaseResponse(message: String? = null) {
     runBlocking {
-      call.respond(
+      respond(
         HttpStatusCode.InternalServerError,
         BaseResponse(success = false, message = message ?: "Error with sever database", null)
       )
     }
   }
 
-  fun PipelineContext<Unit, ApplicationCall>.returnNotFoundResponse(message: String? = null) {
+  fun ApplicationCall.returnNotFoundResponse(message: String? = null) {
     runBlocking {
-      call.respond(
+      respond(
         HttpStatusCode.NotFound,
         BaseResponse(success = false, message = message ?: "Not Found", null)
       )
     }
   }
 
-  fun PipelineContext<Unit, ApplicationCall>.returnParameterErrorResponse(message: String? = null) {
+  fun ApplicationCall.returnParameterErrorResponse(message: String? = null) {
     runBlocking {
-      call.respond(
+      respond(
         HttpStatusCode.BadRequest,
         BaseResponse(success = false, message = message ?: "Parameter Error", null)
       )
     }
   }
 
-  fun PipelineContext<Unit, ApplicationCall>.returnNotImplementedResponse(message: String? = null) {
+  fun ApplicationCall.returnNotImplementedResponse(message: String? = null) {
     runBlocking {
-      call.respond(
+      respond(
         HttpStatusCode.NotImplemented,
         BaseResponse(success = false, message = message ?: "Changes not implemented", null)
+      )
+    }
+  }
+
+  fun ApplicationCall.returnUnauthorizedResponse(message: String? = null) {
+    runBlocking {
+      respond(
+        HttpStatusCode.Unauthorized,
+        BaseResponse(success = false, message = message ?: "Expired token or Unauthorized access", null)
       )
     }
   }
@@ -64,5 +74,17 @@ object Extensions {
     } ?: "jpg"
 
     return "${fileName}.${ext}"
+  }
+
+  fun ApplicationCall.receivePagingRequest(): PagingRequest {
+    val pagingRequest = try {
+      runBlocking {
+        receive<PagingRequest>()
+      }
+    } catch (e: Exception) {
+      PagingRequest()
+    }
+
+    return pagingRequest
   }
 }

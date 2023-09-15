@@ -12,6 +12,7 @@ data class LeaveType(
   val initialName: String?,
   val name: String?,
   val description: String?,
+  val note: String?,
   val illustration: String?,
   @SerialName("default_duration")
   val defaultDuration: Int?,
@@ -30,6 +31,7 @@ data class LeaveType(
         name = queryRowSet[LeaveTypeEntity.name],
         description = queryRowSet[LeaveTypeEntity.description],
         defaultDuration = queryRowSet[LeaveTypeEntity.defaultDuration],
+        note = queryRowSet[LeaveTypeEntity.note],
         illustration = queryRowSet[LeaveTypeEntity.illustration],
         createdAt = queryRowSet[LeaveTypeEntity.createdAt].toString(),
         updatedAt = queryRowSet[LeaveTypeEntity.updatedAt].toString(),
