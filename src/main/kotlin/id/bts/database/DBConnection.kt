@@ -1,26 +1,25 @@
 package id.bts.database
 
+import com.typesafe.config.ConfigFactory
+import io.ktor.server.config.*
 import org.ktorm.database.Database
 import org.ktorm.support.postgresql.PostgreSqlDialect
 
 object DBConnection {
+  private val config = HoconApplicationConfig(ConfigFactory.load())
+  private val dbUrl = config.property("db_url").getString()
+  private val dbDriver = config.property("db_driver").getString()
+  private val dbUser = config.property("db_user").getString()
+  private val dbPassword = config.property("db_password").getString()
+
   val database = try {
-    /* Local Server */
     Database.connect(
-      url = "jdbc:postgresql:db_leave_app",
-      driver = "org.postgresql.Driver",
-      user = "postgres",
-      password = "dhony123",
+      url = dbUrl,
+      driver = dbDriver,
+      user = dbUser,
+      password = dbPassword,
       dialect = PostgreSqlDialect()
     )
-
-    /* Online Server */
-//    Database.connect(
-//      url = "jdbc:postgresql://bubble.db.elephantsql.com:5432/pvhfrxwt",
-//      driver = "org.postgresql.Driver",
-//      user = "pvhfrxwt",
-//      password = "ky1wD1SqtG9IZLZpc6PHC2NvXyY-R30L"
-//    )
   } catch (e: Exception) {
     e.printStackTrace()
     null

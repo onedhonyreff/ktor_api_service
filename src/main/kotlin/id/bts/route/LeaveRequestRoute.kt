@@ -4,7 +4,9 @@ import id.bts.database.DBConnection
 import id.bts.entities.*
 import id.bts.model.request.leave_request.SubmittedLeavePagingRequest
 import id.bts.model.response.BaseResponse
+import id.bts.model.response.leave_approval.LeaveApproval
 import id.bts.model.response.leave_request.SubmittedLeaveRequest
+import id.bts.model.response.on_going_project.OnGoingProject
 import id.bts.model.response.simple_message.SimpleMessage
 import id.bts.utils.DataConstants
 import id.bts.utils.DateTimeUtils.parseToDate
@@ -12,6 +14,7 @@ import id.bts.utils.DateTimeUtils.parseToLocalDate
 import id.bts.utils.Extensions.receivePagingRequest
 import id.bts.utils.Extensions.replaceFileName
 import id.bts.utils.Extensions.returnFailedDatabaseResponse
+import id.bts.utils.Extensions.returnNotFoundResponse
 import id.bts.utils.Extensions.returnNotImplementedResponse
 import id.bts.utils.Extensions.returnParameterErrorResponse
 import id.bts.utils.ProjectUtils
@@ -176,7 +179,21 @@ fun Application.configureLeaveRequestRoute() {
             .leftJoin(LeaveTypeEntity, on = LeaveTypeEntity.id eq SubmittedLeaveRequestEntity.leaveTypeId)
             .select().limit(pagingRequest.size).offset(pagingRequest.pagingOffset).where {
               (SubmittedLeaveRequestEntity.status inList pagingRequest.status) and (SubmittedLeaveRequestEntity.userId eq userId) and (SubmittedLeaveRequestEntity.deletedFlag neq true)
-            }.orderBy(SubmittedLeaveRequestEntity.id.desc()).map { SubmittedLeaveRequest.transform(it) }
+            }.orderBy(SubmittedLeaveRequestEntity.id.desc()).map {
+              val submittedLeaveRequestId = it[SubmittedLeaveRequestEntity.id]!!
+              val leaveApprovals = database.from(LeaveApprovalEntity)
+                .leftJoin(UserEntity, on = UserEntity.id eq LeaveApprovalEntity.assignedUserId)
+                .leftJoin(RoleEntity, on = RoleEntity.id eq UserEntity.roleId)
+                .leftJoin(SuperVisorEntity, on = SuperVisorEntity.userId eq UserEntity.id)
+                .leftJoin(HumanCapitalManagementEntity, on = HumanCapitalManagementEntity.userId eq UserEntity.id)
+                .select().where {
+                  (LeaveApprovalEntity.submittedLeaveRequestId eq submittedLeaveRequestId) and (LeaveApprovalEntity.deletedFlag neq true)
+                }.map { leaveApprovalRowSet ->
+                  LeaveApproval.transform(leaveApprovalRowSet)
+                }.filterNotNull()
+
+              SubmittedLeaveRequest.transform(it, leaveApprovals = leaveApprovals, hideLeaveApprovals = true)
+            }
           val message = "List data fetched successfully"
           call.respond(
             BaseResponse(
@@ -196,6 +213,41 @@ fun Application.configureLeaveRequestRoute() {
           call.returnParameterErrorResponse(e.message)
           return@get
         }
+
+        DBConnection.database?.let { database ->
+          database.from(SubmittedLeaveRequestEntity)
+            .leftJoin(UserEntity, on = UserEntity.id eq SubmittedLeaveRequestEntity.userId)
+            .leftJoin(RoleEntity, on = RoleEntity.id eq UserEntity.roleId)
+            .leftJoin(LeaveTypeEntity, on = LeaveTypeEntity.id eq SubmittedLeaveRequestEntity.leaveTypeId)
+            .select().where {
+              (SubmittedLeaveRequestEntity.id eq submittedLeaveRequestId) and (SubmittedLeaveRequestEntity.deletedFlag neq true)
+            }
+            .map {
+              val onGoingProjects = database.from(OnGoingProjectEntity)
+                .select().where {
+                  (OnGoingProjectEntity.leaveRequestId eq submittedLeaveRequestId) and (OnGoingProjectEntity.deletedFlag neq true)
+                }.orderBy(OnGoingProjectEntity.id.desc()).map { onGoingProjectRowSet ->
+                  OnGoingProject.transform(onGoingProjectRowSet)
+                }
+
+              val leaveApprovals = database.from(LeaveApprovalEntity)
+                .leftJoin(UserEntity, on = UserEntity.id eq LeaveApprovalEntity.assignedUserId)
+                .leftJoin(RoleEntity, on = RoleEntity.id eq UserEntity.roleId)
+                .leftJoin(SuperVisorEntity, on = SuperVisorEntity.userId eq UserEntity.id)
+                .leftJoin(HumanCapitalManagementEntity, on = HumanCapitalManagementEntity.userId eq UserEntity.id)
+                .select().where {
+                  (LeaveApprovalEntity.submittedLeaveRequestId eq submittedLeaveRequestId) and (LeaveApprovalEntity.deletedFlag neq true)
+                }.map { leaveApprovalRowSet ->
+                  LeaveApproval.transform(leaveApprovalRowSet)
+                }.filterNotNull()
+
+              SubmittedLeaveRequest.transform(it, onGoingProjects = onGoingProjects, leaveApprovals = leaveApprovals)
+            }
+            .firstOrNull()?.let { data ->
+              val message = "Single data fetched successfully"
+              call.respond(BaseResponse(success = true, message = message, data = data))
+            } ?: run { call.returnNotFoundResponse() }
+        } ?: run { call.returnFailedDatabaseResponse() }
       }
     }
   }
