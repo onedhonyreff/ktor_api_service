@@ -25,4 +25,5 @@ fun Application.configureRouting() {
   configureUserRoute()
   configureLeaveRequestRoute()
   configureLeaveApprovalRoute()
+  configureNotificationRoute()
 }

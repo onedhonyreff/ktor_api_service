@@ -8,6 +8,7 @@ import id.bts.model.request.leave_approval.LeaveRejectionRequest
 import id.bts.model.response.BaseResponse
 import id.bts.model.response.leave_approval.AssignedApproval
 import id.bts.model.response.leave_approval.LeaveApproval
+import id.bts.model.response.leave_type.LeaveType
 import id.bts.model.response.on_going_project.OnGoingProject
 import id.bts.model.response.simple_message.SimpleMessage
 import id.bts.utils.DataConstants
@@ -182,6 +183,36 @@ fun Application.configureLeaveApprovalRoute() {
                   (it.id eq submittedLeaveRequestId) and (it.status neq DataConstants.SubmittedLeaveRequestStatus.CANCELED)
                 }
               }
+
+              // get leave type data
+              var userId: Int? = null
+              var requestedLeaveDuration: Int? = null
+              val leaveType = database.from(SubmittedLeaveRequestEntity)
+                .leftJoin(LeaveTypeEntity, on = LeaveTypeEntity.id eq SubmittedLeaveRequestEntity.leaveTypeId)
+                .select().where {
+                  (SubmittedLeaveRequestEntity.id eq submittedLeaveRequestId) and (SubmittedLeaveRequestEntity.deletedFlag neq true)
+                }.map {
+                  userId = it[SubmittedLeaveRequestEntity.userId]
+                  requestedLeaveDuration = it[SubmittedLeaveRequestEntity.totalLeave]
+                  LeaveType.transform(it)
+                }.firstOrNull()
+
+              // add notification data
+              val approvedType = if (approvals.all { approval -> approval.allowedDuration == requestedLeaveDuration }) {
+                "<b>Approved All</b> successfully!"
+              } else {
+                "<b>Approved Partially</b> successful!"
+              }
+              val notificationMessage = """
+                Your <b>${leaveType?.name} Request</b> has been $approvedType
+              """.trimIndent()
+              database.insert(NotificationEntity) {
+                set(it.userId, userId)
+                set(it.firstRelationId, submittedLeaveRequestId)
+                set(it.notificationType, DataConstants.NotificationType.LEAVE_APPROVAL)
+                set(it.message, notificationMessage)
+                set(it.tag, leaveType?.name)
+              }
             }
 
             val message = "Leave approval has been approved successfully"
@@ -260,6 +291,29 @@ fun Application.configureLeaveApprovalRoute() {
               where {
                 (it.id eq submittedLeaveRequestId) and (it.status neq DataConstants.SubmittedLeaveRequestStatus.CANCELED)
               }
+            }
+
+            // get leave type data
+            var userId: Int? = null
+            val leaveType = database.from(SubmittedLeaveRequestEntity)
+              .leftJoin(LeaveTypeEntity, on = LeaveTypeEntity.id eq SubmittedLeaveRequestEntity.leaveTypeId)
+              .select().where {
+                (SubmittedLeaveRequestEntity.id eq submittedLeaveRequestId) and (SubmittedLeaveRequestEntity.deletedFlag neq true)
+              }.map {
+                userId = it[SubmittedLeaveRequestEntity.userId]
+                LeaveType.transform(it)
+              }.firstOrNull()
+
+            // add notification data
+            val notificationMessage = """
+                Your <b>${leaveType?.name} Request</b> has been <b>Rejected</b>
+              """.trimIndent()
+            database.insert(NotificationEntity) {
+              set(it.userId, userId)
+              set(it.firstRelationId, submittedLeaveRequestId)
+              set(it.notificationType, DataConstants.NotificationType.LEAVE_APPROVAL)
+              set(it.message, notificationMessage)
+              set(it.tag, leaveType?.name)
             }
 
             val message = "Leave approval has been rejected successfully"

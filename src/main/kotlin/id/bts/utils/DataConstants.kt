@@ -19,4 +19,9 @@ object DataConstants {
     const val REJECTED = "REJECTED"
     const val CANCELED = "CANCELED"
   }
+
+  object NotificationType {
+    const val LEAVE_REQUEST = "LEAVE_REQUEST"
+    const val LEAVE_APPROVAL = "LEAVE_APPROVAL"
+  }
 }

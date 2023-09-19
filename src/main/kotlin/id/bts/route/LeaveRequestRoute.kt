@@ -6,6 +6,7 @@ import id.bts.model.request.leave_request.SubmittedLeavePagingRequest
 import id.bts.model.response.BaseResponse
 import id.bts.model.response.leave_approval.LeaveApproval
 import id.bts.model.response.leave_request.SubmittedLeaveRequest
+import id.bts.model.response.leave_type.LeaveType
 import id.bts.model.response.on_going_project.OnGoingProject
 import id.bts.model.response.simple_message.SimpleMessage
 import id.bts.utils.DataConstants
@@ -132,27 +133,46 @@ fun Application.configureLeaveRequestRoute() {
               set(it.status, DataConstants.SubmittedLeaveRequestStatus.PENDING)
             } as Int?
 
-            onGoingProjects?.forEach { onGoingProject ->
-              database.insert(OnGoingProjectEntity) {
-                set(it.leaveRequestId, leaveRequestId)
-                set(it.name, onGoingProject)
-              }
-            }
-
-            assignedUserIds.forEach { assignedUserId ->
-              database.insert(LeaveApprovalEntity) {
-                set(it.submittedLeaveRequestId, leaveRequestId)
-                set(it.assignedUserId, assignedUserId)
-                set(it.allowedStartDate, startDate)
-                set(it.allowedEndDate, endDate)
-                set(it.allowedDuration, totalLeave)
-                set(it.status, DataConstants.LeaveApprovalStatus.PENDING)
-              }
-            }
-
             if (leaveRequestId == 0) {
               call.returnNotImplementedResponse()
             } else {
+              // add ongoing projects
+              onGoingProjects?.forEach { onGoingProject ->
+                database.insert(OnGoingProjectEntity) {
+                  set(it.leaveRequestId, leaveRequestId)
+                  set(it.name, onGoingProject)
+                }
+              }
+
+              // add approvals
+              assignedUserIds.forEach { assignedUserId ->
+                database.insert(LeaveApprovalEntity) {
+                  set(it.submittedLeaveRequestId, leaveRequestId)
+                  set(it.assignedUserId, assignedUserId)
+                  set(it.allowedStartDate, startDate)
+                  set(it.allowedEndDate, endDate)
+                  set(it.allowedDuration, totalLeave)
+                  set(it.status, DataConstants.LeaveApprovalStatus.PENDING)
+                }
+              }
+
+              // get leave type data
+              val leaveType = database.from(LeaveTypeEntity).select().where {
+                (LeaveTypeEntity.id eq leaveTypeId!!) and (LeaveTypeEntity.deletedFlag neq true)
+              }.map { LeaveType.transform(it) }.firstOrNull()
+
+              // add notification data
+              val notificationMessage = """
+                Your <b>${leaveType?.name} Request</b> has been <b>sent</b> successfully!
+              """.trimIndent()
+              database.insert(NotificationEntity) {
+                set(it.userId, userId)
+                set(it.firstRelationId, leaveRequestId)
+                set(it.notificationType, DataConstants.NotificationType.LEAVE_REQUEST)
+                set(it.message, notificationMessage)
+                set(it.tag, leaveType?.name)
+              }
+
               val message = "Successfully added leave request data"
               call.respond(BaseResponse(success = true, message = message, data = SimpleMessage(message)))
             }
