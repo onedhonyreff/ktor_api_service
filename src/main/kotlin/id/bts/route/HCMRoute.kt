@@ -3,6 +3,7 @@ package id.bts.route
 import id.bts.database.DBConnection
 import id.bts.entities.HumanCapitalManagementEntity
 import id.bts.entities.UserEntity
+import id.bts.model.request.PagingRequest
 import id.bts.model.request.user.HCMRequest
 import id.bts.model.response.BaseResponse
 import id.bts.model.response.simple_message.SimpleMessage
@@ -43,7 +44,7 @@ fun Application.configureHCMRoute() {
       }
 
       post("/hcm-list") {
-        val pagingRequest = call.receivePagingRequest()
+        val pagingRequest = call.receivePagingRequest<PagingRequest>()
         DBConnection.database?.let { database ->
           val hcmList = database.from(HumanCapitalManagementEntity)
             .leftJoin(UserEntity, on = UserEntity.id eq HumanCapitalManagementEntity.userId)

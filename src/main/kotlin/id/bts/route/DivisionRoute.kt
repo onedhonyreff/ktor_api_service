@@ -2,6 +2,7 @@ package id.bts.route
 
 import id.bts.database.DBConnection
 import id.bts.entities.DivisionEntity
+import id.bts.model.request.PagingRequest
 import id.bts.model.request.division.DivisionRequest
 import id.bts.model.response.BaseResponse
 import id.bts.model.response.division.Division
@@ -40,7 +41,7 @@ fun Application.configureDivisionRoute() {
       }
 
       post("/divisions") {
-        val pagingRequest = call.receivePagingRequest()
+        val pagingRequest = call.receivePagingRequest<PagingRequest>()
         DBConnection.database?.let { database ->
           val divisions = database.from(DivisionEntity)
             .select().limit(pagingRequest.size).offset(pagingRequest.pagingOffset).where {

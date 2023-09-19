@@ -24,4 +24,5 @@ fun Application.configureRouting() {
   configureSuperVisorRoute()
   configureUserRoute()
   configureLeaveRequestRoute()
+  configureLeaveApprovalRoute()
 }

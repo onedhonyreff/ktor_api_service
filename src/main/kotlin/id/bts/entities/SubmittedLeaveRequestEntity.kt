@@ -2,7 +2,7 @@ package id.bts.entities
 
 import org.ktorm.schema.*
 
-object LeaveRequestEntity : Table<Nothing>("leave_requests") {
+object SubmittedLeaveRequestEntity : Table<Nothing>("leave_requests") {
   val id = int("id").primaryKey()
   val userId = int("user_id")
   val leaveTypeId = int("leave_type_id")
@@ -13,7 +13,7 @@ object LeaveRequestEntity : Table<Nothing>("leave_requests") {
   val reason = text("reason")
   val firstSuperVisorId = int("first_super_visor_id")
   val secondSuperVisorId = int("second_super_visor_id")
-  val isCanceled = boolean("is_canceled")
+  val status = varchar("status")
   val createdAt = timestamp("created_at")
   val updatedAt = timestamp("updated_at")
   val deletedAt = timestamp("deleted_at")

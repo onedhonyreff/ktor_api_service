@@ -2,6 +2,7 @@ package id.bts.route
 
 import id.bts.database.DBConnection
 import id.bts.entities.*
+import id.bts.model.request.user.UserPagingRequest
 import id.bts.model.response.BaseResponse
 import id.bts.model.response.simple_message.SimpleMessage
 import id.bts.model.response.user.User
@@ -51,7 +52,7 @@ fun Application.configureUserRoute() {
       }
 
       post("/users") {
-        val pagingRequest = call.receivePagingRequest()
+        val pagingRequest = call.receivePagingRequest<UserPagingRequest>()
 
         DBConnection.database?.let { database ->
           val hcmUser = UserEntity.aliased(UserEntity.HCM_USER_ALIAS)
@@ -88,7 +89,7 @@ fun Application.configureUserRoute() {
             .limit(pagingRequest.size).offset(pagingRequest.pagingOffset)
             .where { ((UserEntity.email.toLowerCase() like "%${pagingRequest.search.lowercase()}%") or (UserEntity.name.toLowerCase() like "%${pagingRequest.search.lowercase()}%")) and (UserEntity.deletedFlag neq true) }
             .orderBy(UserEntity.id.desc())
-            .map { User.transform(it, hcmRelationEntity = userHcmRelationEntity) }
+            .map { User.transform(it, hcmRelationEntity = userHcmRelationEntity) }.filterNotNull()
           val message = "User list data fetched successfully"
           call.respond(BaseResponse(success = true, message = message, data = users, totalData = users.size))
         } ?: run { call.returnFailedDatabaseResponse() }

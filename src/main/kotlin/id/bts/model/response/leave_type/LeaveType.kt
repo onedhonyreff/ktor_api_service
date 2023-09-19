@@ -15,28 +15,21 @@ data class LeaveType(
   val note: String?,
   val illustration: String?,
   @SerialName("default_duration")
-  val defaultDuration: Int?,
-  @SerialName("created_at")
-  val createdAt: String?,
-  @SerialName("updated_at")
-  val updatedAt: String?,
-  @SerialName("deleted_at")
-  val deletedAt: String?
+  val defaultDuration: Int?
 ) {
   companion object {
-    fun transform(queryRowSet: QueryRowSet): LeaveType {
-      return LeaveType(
-        id = queryRowSet[LeaveTypeEntity.id].toString(),
-        initialName = queryRowSet[LeaveTypeEntity.initial_name],
-        name = queryRowSet[LeaveTypeEntity.name],
-        description = queryRowSet[LeaveTypeEntity.description],
-        defaultDuration = queryRowSet[LeaveTypeEntity.defaultDuration],
-        note = queryRowSet[LeaveTypeEntity.note],
-        illustration = queryRowSet[LeaveTypeEntity.illustration],
-        createdAt = queryRowSet[LeaveTypeEntity.createdAt].toString(),
-        updatedAt = queryRowSet[LeaveTypeEntity.updatedAt].toString(),
-        deletedAt = queryRowSet[LeaveTypeEntity.deletedAt].toString()
-      )
+    fun transform(queryRowSet: QueryRowSet): LeaveType? {
+      return queryRowSet[LeaveTypeEntity.id]?.toString()?.let {
+        LeaveType(
+          id = it,
+          initialName = queryRowSet[LeaveTypeEntity.initial_name],
+          name = queryRowSet[LeaveTypeEntity.name],
+          description = queryRowSet[LeaveTypeEntity.description],
+          defaultDuration = queryRowSet[LeaveTypeEntity.defaultDuration],
+          note = queryRowSet[LeaveTypeEntity.note],
+          illustration = queryRowSet[LeaveTypeEntity.illustration]
+        )
+      }
     }
   }
 }

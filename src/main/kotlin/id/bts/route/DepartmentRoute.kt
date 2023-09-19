@@ -2,6 +2,7 @@ package id.bts.route
 
 import id.bts.database.DBConnection
 import id.bts.entities.DepartmentEntity
+import id.bts.model.request.PagingRequest
 import id.bts.model.request.department.DepartmentRequest
 import id.bts.model.response.BaseResponse
 import id.bts.model.response.department.Department
@@ -40,7 +41,7 @@ fun Application.configureDepartmentRoute() {
       }
 
       post("/departments") {
-        val pagingRequest = call.receivePagingRequest()
+        val pagingRequest = call.receivePagingRequest<PagingRequest>()
         DBConnection.database?.let { database ->
           val departments = database.from(DepartmentEntity)
             .select().limit(pagingRequest.size).offset(pagingRequest.pagingOffset).where {
