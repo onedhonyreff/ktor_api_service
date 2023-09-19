@@ -4444,7 +4444,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJodHRwczovL2xhY2V3aW5nLWh1bW9yb3VzLWFsbGVnZWRseS5uZ3Jvay1mcmVlLmFwcC91c2VyIiwiaXNzIjoiaHR0cHM6Ly9sYWNld2luZy1odW1vcm91cy1hbGxlZ2VkbHkubmdyb2stZnJlZS5hcHAiLCJpZCI6IjUiLCJlbWFpbCI6ImhjbTFAZ21haWwuY29tIiwibmFtZSI6IkhDTSBTYXR1IiwiaXNfc3VwZXJfdmlzb3IiOmZhbHNlLCJpc19oY20iOnRydWUsImlzX3JlZnJlc2hfdG9rZW4iOmZhbHNlLCJleHAiOjE2OTQ2NTAxOTJ9.BVgZtaHbwZ9GWiS__NzaMPgsfQHAcTjh_AFDSPa9gV4",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJodHRwczovL2xhY2V3aW5nLWh1bW9yb3VzLWFsbGVnZWRseS5uZ3Jvay1mcmVlLmFwcC91c2VyIiwiaXNzIjoiaHR0cHM6Ly9sYWNld2luZy1odW1vcm91cy1hbGxlZ2VkbHkubmdyb2stZnJlZS5hcHAiLCJpZCI6IjciLCJlbWFpbCI6InVzZXIxQGdtYWlsLmNvbSIsIm5hbWUiOiJVc2VyIFNhdHUgVXBkYXRlZCIsImlzX3N1cGVyX3Zpc29yIjpmYWxzZSwiaXNfaGNtIjpmYWxzZSwiaXNfcmVmcmVzaF90b2tlbiI6ZmFsc2UsImV4cCI6MTY5NTA5NzAwM30.ZQlo3ucZYsbhEX3zVwFeZeFHKghkGoMfm6St-lAkH2U",
 									"type": "string"
 								}
 							]
@@ -4471,61 +4471,6 @@
 						}
 					},
 					"response": [
-						{
-							"name": "My Leave Allowance List - Success",
-							"originalRequest": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"name": "Content-Type",
-										"value": "application/json",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"page\": 0,\r\n    \"size\": 10\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{LEAVE_APP_URL}}/my-leave-allowances",
-									"host": [
-										"{{LEAVE_APP_URL}}"
-									],
-									"path": [
-										"my-leave-allowances"
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Content-Length",
-									"value": "7116"
-								},
-								{
-									"key": "Content-Type",
-									"value": "application/json"
-								},
-								{
-									"key": "Ngrok-Trace-Id",
-									"value": "9ceb4499bad3d585fd4674fb3ae9cd16"
-								},
-								{
-									"key": "Date",
-									"value": "Wed, 13 Sep 2023 02:28:23 GMT"
-								}
-							],
-							"cookie": [],
-							"body": "{\n    \"success\": true,\n    \"message\": \"User leave allowance list data fetched successfully\",\n    \"data\": [\n        {\n            \"id\": \"21\",\n            \"user_id\": \"5\",\n            \"leave_type_id\": \"17\",\n            \"leave_type\": {\n                \"id\": \"17\",\n                \"initial_name\": \"Paternity\",\n                \"name\": \"Paternity Leave\",\n                \"description\": \"Istri Melahirkan/Keguguran\",\n                \"note\": null,\n                \"illustration\": \"/file/open/image/leave_type/1694499132383.jpg\",\n                \"default_duration\": 2,\n                \"created_at\": \"2023-09-12T06:12:12Z\",\n                \"updated_at\": \"null\",\n                \"deleted_at\": \"2023-09-12T07:17:44Z\"\n            },\n            \"duration\": 2,\n            \"created_at\": \"2023-09-12T07:31:40Z\",\n            \"updated_at\": \"null\",\n            \"deleted_at\": \"null\"\n        },\n        {\n            \"id\": \"20\",\n            \"user_id\": \"5\",\n            \"leave_type_id\": \"20\",\n            \"leave_type\": {\n                \"id\": \"20\",\n                \"initial_name\": \"Bereavement\",\n                \"name\": \"Bereavement Leave\",\n                \"description\": \"Suami/Istri, Orangtua/Mertua, Anak/Menantu meninggal dunia\",\n                \"note\": \"(Different City)\",\n                \"illustration\": \"/file/open/image/leave_type/1694501400097.jpg\",\n                \"default_duration\": 2,\n                \"created_at\": \"2023-09-12T06:50:01Z\",\n                \"updated_at\": \"null\",\n                \"deleted_at\": \"2023-09-12T07:17:44Z\"\n            },\n            \"duration\": 2,\n            \"created_at\": \"2023-09-12T07:31:40Z\",\n            \"updated_at\": \"null\",\n            \"deleted_at\": \"null\"\n        },\n        {\n            \"id\": \"19\",\n            \"user_id\": \"5\",\n            \"leave_type_id\": \"21\",\n            \"leave_type\": {\n                \"id\": \"21\",\n                \"initial_name\": \"Bereavement - updated\",\n                \"name\": \"Bereavement Leave\",\n                \"description\": \"Anggota keluarga serumah meninggal dunia\",\n                \"note\": \"(Same City)\",\n                \"illustration\": \"/file/open/image/leave_type/1694502653189.jpg\",\n                \"default_duration\": 1,\n                \"created_at\": \"2023-09-12T06:51:59Z\",\n                \"updated_at\": \"2023-09-12T07:10:53Z\",\n                \"deleted_at\": \"2023-09-12T07:19:13Z\"\n            },\n            \"duration\": 1,\n            \"created_at\": \"2023-09-12T07:31:40Z\",\n            \"updated_at\": \"null\",\n            \"deleted_at\": \"null\"\n        },\n        {\n            \"id\": \"18\",\n            \"user_id\": \"5\",\n            \"leave_type_id\": \"11\",\n            \"leave_type\": {\n                \"id\": \"11\",\n                \"initial_name\": \"Annual\",\n                \"name\": \"Annual Leave\",\n                \"description\": \"Cuti Tahunan\",\n                \"note\": null,\n                \"illustration\": \"/file/open/image/leave_type/1694498446373.jpg\",\n                \"default_duration\": 12,\n                \"created_at\": \"2023-09-12T06:00:47Z\",\n                \"updated_at\": \"null\",\n                \"deleted_at\": \"2023-09-12T07:17:44Z\"\n            },\n            \"duration\": 12,\n            \"created_at\": \"2023-09-12T07:31:40Z\",\n            \"updated_at\": \"null\",\n            \"deleted_at\": \"null\"\n        },\n        {\n            \"id\": \"17\",\n            \"user_id\": \"5\",\n            \"leave_type_id\": \"12\",\n            \"leave_type\": {\n                \"id\": \"12\",\n                \"initial_name\": \"Sick\",\n                \"name\": \"Sick Leave\",\n                \"description\": \"Cuti Sakit\",\n                \"note\": null,\n                \"illustration\": \"/file/open/image/leave_type/1694498680575.jpg\",\n                \"default_duration\": null,\n                \"created_at\": \"2023-09-12T06:04:41Z\",\n                \"updated_at\": \"null\",\n                \"deleted_at\": \"2023-09-12T07:17:44Z\"\n            },\n            \"duration\": null,\n            \"created_at\": \"2023-09-12T07:31:40Z\",\n            \"updated_at\": \"null\",\n            \"deleted_at\": \"null\"\n        },\n        {\n            \"id\": \"16\",\n            \"user_id\": \"5\",\n            \"leave_type_id\": \"13\",\n            \"leave_type\": {\n                \"id\": \"13\",\n                \"initial_name\": \"Maternity\",\n                \"name\": \"Maternity Leave\",\n                \"description\": \"Cuti Hamil\",\n                \"note\": null,\n                \"illustration\": \"/file/open/image/leave_type/1694498775819.jpg\",\n                \"default_duration\": 90,\n                \"created_at\": \"2023-09-12T06:06:16Z\",\n                \"updated_at\": \"null\",\n                \"deleted_at\": \"2023-09-12T07:17:44Z\"\n            },\n            \"duration\": 90,\n            \"created_at\": \"2023-09-12T07:31:40Z\",\n            \"updated_at\": \"null\",\n            \"deleted_at\": \"null\"\n        },\n        {\n            \"id\": \"15\",\n            \"user_id\": \"5\",\n            \"leave_type_id\": \"14\",\n            \"leave_type\": {\n                \"id\": \"14\",\n                \"initial_name\": \"Marriage\",\n                \"name\": \"Marriage Leave\",\n                \"description\": \"Karyawan Menikah\",\n                \"note\": null,\n                \"illustration\": \"/file/open/image/leave_type/1694498847323.jpg\",\n                \"default_duration\": 3,\n                \"created_at\": \"2023-09-12T06:07:27Z\",\n                \"updated_at\": \"null\",\n                \"deleted_at\": \"2023-09-12T07:17:44Z\"\n            },\n            \"duration\": 3,\n            \"created_at\": \"2023-09-12T07:31:40Z\",\n            \"updated_at\": \"null\",\n            \"deleted_at\": \"null\"\n        },\n        {\n            \"id\": \"14\",\n            \"user_id\": \"5\",\n            \"leave_type_id\": \"15\",\n            \"leave_type\": {\n                \"id\": \"15\",\n                \"initial_name\": \"Marry Off Children\",\n                \"name\": \"Marry Off Children Leave\",\n                \"description\": \"Menikahkan Anak\",\n                \"note\": null,\n                \"illustration\": \"/file/open/image/leave_type/1694498931553.jpg\",\n                \"default_duration\": 2,\n                \"created_at\": \"2023-09-12T06:08:52Z\",\n                \"updated_at\": \"null\",\n                \"deleted_at\": \"2023-09-12T07:17:44Z\"\n            },\n            \"duration\": 2,\n            \"created_at\": \"2023-09-12T07:31:40Z\",\n            \"updated_at\": \"null\",\n            \"deleted_at\": \"null\"\n        },\n        {\n            \"id\": \"13\",\n            \"user_id\": \"5\",\n            \"leave_type_id\": \"16\",\n            \"leave_type\": {\n                \"id\": \"16\",\n                \"initial_name\": \"Circumcise/Baptize a Child\",\n                \"name\": \"Circumcise/Baptize a Child\",\n                \"description\": \"Mengkhitankan/Membaptiskan Anak\",\n                \"note\": null,\n                \"illustration\": \"/file/open/image/leave_type/1694499040535.jpg\",\n                \"default_duration\": 2,\n                \"created_at\": \"2023-09-12T06:10:41Z\",\n                \"updated_at\": \"null\",\n                \"deleted_at\": \"2023-09-12T07:17:44Z\"\n            },\n            \"duration\": 2,\n            \"created_at\": \"2023-09-12T07:31:40Z\",\n            \"updated_at\": \"null\",\n            \"deleted_at\": \"null\"\n        }\n    ],\n    \"total_data\": 9\n}"
-						},
 						{
 							"name": "My Leave Allowance List - Unauthorized",
 							"originalRequest": {
@@ -4580,6 +4525,54 @@
 							],
 							"cookie": [],
 							"body": "{\n    \"success\": false,\n    \"message\": \"Expired token or Unauthorized access\"\n}"
+						},
+						{
+							"name": "My Leave Allowance List - Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"page\": 0,\r\n    \"size\": 10\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{LEAVE_APP_URL}}/my-leave-allowances",
+									"host": [
+										"{{LEAVE_APP_URL}}"
+									],
+									"path": [
+										"my-leave-allowances"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Length",
+									"value": "5012"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Ngrok-Trace-Id",
+									"value": "b225e895faede5bdc4e36b5cf3ccfb8a"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 18 Sep 2023 10:37:00 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"User leave allowance list data fetched successfully\",\n    \"data\": [\n        {\n            \"id\": \"39\",\n            \"user_id\": \"7\",\n            \"leave_type_id\": \"17\",\n            \"leave_type\": {\n                \"id\": \"17\",\n                \"initial_name\": \"Paternity\",\n                \"name\": \"Paternity Leave\",\n                \"description\": \"Istri Melahirkan/Keguguran\",\n                \"note\": null,\n                \"illustration\": \"/file/open/image/leave_type/1694499132383.jpg\",\n                \"default_duration\": 2\n            },\n            \"duration\": 2,\n            \"used_duration\": 0\n        },\n        {\n            \"id\": \"38\",\n            \"user_id\": \"7\",\n            \"leave_type_id\": \"20\",\n            \"leave_type\": {\n                \"id\": \"20\",\n                \"initial_name\": \"Bereavement\",\n                \"name\": \"Bereavement Leave\",\n                \"description\": \"Suami/Istri, Orangtua/Mertua, Anak/Menantu meninggal dunia\",\n                \"note\": \"(Different City)\",\n                \"illustration\": \"/file/open/image/leave_type/1694501400097.jpg\",\n                \"default_duration\": 2\n            },\n            \"duration\": 2,\n            \"used_duration\": 0\n        },\n        {\n            \"id\": \"37\",\n            \"user_id\": \"7\",\n            \"leave_type_id\": \"21\",\n            \"leave_type\": {\n                \"id\": \"21\",\n                \"initial_name\": \"Bereavement - updated\",\n                \"name\": \"Bereavement Leave\",\n                \"description\": \"Anggota keluarga serumah meninggal dunia\",\n                \"note\": \"(Same City)\",\n                \"illustration\": \"/file/open/image/leave_type/1694502653189.jpg\",\n                \"default_duration\": 1\n            },\n            \"duration\": 1,\n            \"used_duration\": 0\n        },\n        {\n            \"id\": \"36\",\n            \"user_id\": \"7\",\n            \"leave_type_id\": \"11\",\n            \"leave_type\": {\n                \"id\": \"11\",\n                \"initial_name\": \"Annual\",\n                \"name\": \"Annual Leave\",\n                \"description\": \"Cuti Tahunan\",\n                \"note\": null,\n                \"illustration\": \"/file/open/image/leave_type/1694498446373.jpg\",\n                \"default_duration\": 12\n            },\n            \"duration\": 12,\n            \"used_duration\": 5\n        },\n        {\n            \"id\": \"35\",\n            \"user_id\": \"7\",\n            \"leave_type_id\": \"12\",\n            \"leave_type\": {\n                \"id\": \"12\",\n                \"initial_name\": \"Sick\",\n                \"name\": \"Sick Leave\",\n                \"description\": \"Cuti Sakit\",\n                \"note\": null,\n                \"illustration\": \"/file/open/image/leave_type/1694498680575.jpg\",\n                \"default_duration\": null\n            },\n            \"duration\": null,\n            \"used_duration\": 0\n        },\n        {\n            \"id\": \"34\",\n            \"user_id\": \"7\",\n            \"leave_type_id\": \"13\",\n            \"leave_type\": {\n                \"id\": \"13\",\n                \"initial_name\": \"Maternity\",\n                \"name\": \"Maternity Leave\",\n                \"description\": \"Cuti Hamil\",\n                \"note\": null,\n                \"illustration\": \"/file/open/image/leave_type/1694498775819.jpg\",\n                \"default_duration\": 90\n            },\n            \"duration\": 90,\n            \"used_duration\": 0\n        },\n        {\n            \"id\": \"33\",\n            \"user_id\": \"7\",\n            \"leave_type_id\": \"14\",\n            \"leave_type\": {\n                \"id\": \"14\",\n                \"initial_name\": \"Marriage\",\n                \"name\": \"Marriage Leave\",\n                \"description\": \"Karyawan Menikah\",\n                \"note\": null,\n                \"illustration\": \"/file/open/image/leave_type/1694498847323.jpg\",\n                \"default_duration\": 3\n            },\n            \"duration\": 3,\n            \"used_duration\": 0\n        },\n        {\n            \"id\": \"32\",\n            \"user_id\": \"7\",\n            \"leave_type_id\": \"15\",\n            \"leave_type\": {\n                \"id\": \"15\",\n                \"initial_name\": \"Marry Off Children\",\n                \"name\": \"Marry Off Children Leave\",\n                \"description\": \"Menikahkan Anak\",\n                \"note\": null,\n                \"illustration\": \"/file/open/image/leave_type/1694498931553.jpg\",\n                \"default_duration\": 2\n            },\n            \"duration\": 2,\n            \"used_duration\": 0\n        },\n        {\n            \"id\": \"31\",\n            \"user_id\": \"7\",\n            \"leave_type_id\": \"16\",\n            \"leave_type\": {\n                \"id\": \"16\",\n                \"initial_name\": \"Circumcise/Baptize a Child\",\n                \"name\": \"Circumcise/Baptize a Child\",\n                \"description\": \"Mengkhitankan/Membaptiskan Anak\",\n                \"note\": null,\n                \"illustration\": \"/file/open/image/leave_type/1694499040535.jpg\",\n                \"default_duration\": 2\n            },\n            \"duration\": 2,\n            \"used_duration\": 0\n        }\n    ],\n    \"total_data\": 9\n}"
 						}
 					]
 				},
@@ -4594,7 +4587,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJodHRwczovL2xhY2V3aW5nLWh1bW9yb3VzLWFsbGVnZWRseS5uZ3Jvay1mcmVlLmFwcC91c2VyIiwiaXNzIjoiaHR0cHM6Ly9sYWNld2luZy1odW1vcm91cy1hbGxlZ2VkbHkubmdyb2stZnJlZS5hcHAiLCJpZCI6IjUiLCJlbWFpbCI6ImhjbTFAZ21haWwuY29tIiwibmFtZSI6IkhDTSBTYXR1IiwiaXNfc3VwZXJfdmlzb3IiOmZhbHNlLCJpc19oY20iOnRydWUsImlzX3JlZnJlc2hfdG9rZW4iOmZhbHNlLCJleHAiOjE2OTQ2NTAxOTJ9.BVgZtaHbwZ9GWiS__NzaMPgsfQHAcTjh_AFDSPa9gV4",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJodHRwczovL2xhY2V3aW5nLWh1bW9yb3VzLWFsbGVnZWRseS5uZ3Jvay1mcmVlLmFwcC91c2VyIiwiaXNzIjoiaHR0cHM6Ly9sYWNld2luZy1odW1vcm91cy1hbGxlZ2VkbHkubmdyb2stZnJlZS5hcHAiLCJpZCI6IjciLCJlbWFpbCI6InVzZXIxQGdtYWlsLmNvbSIsIm5hbWUiOiJVc2VyIFNhdHUgVXBkYXRlZCIsImlzX3N1cGVyX3Zpc29yIjpmYWxzZSwiaXNfaGNtIjpmYWxzZSwiaXNfcmVmcmVzaF90b2tlbiI6ZmFsc2UsImV4cCI6MTY5NTA5NzAwM30.ZQlo3ucZYsbhEX3zVwFeZeFHKghkGoMfm6St-lAkH2U",
 									"type": "string"
 								}
 							]
@@ -4606,7 +4599,7 @@
 							"urlencoded": []
 						},
 						"url": {
-							"raw": "{{LEAVE_APP_URL}}/my-leave-allowance?leave_type_id=20",
+							"raw": "{{LEAVE_APP_URL}}/my-leave-allowance?leave_type_id=11",
 							"host": [
 								"{{LEAVE_APP_URL}}"
 							],
@@ -4616,7 +4609,7 @@
 							"query": [
 								{
 									"key": "leave_type_id",
-									"value": "20",
+									"value": "11",
 									"description": "required"
 								}
 							]
@@ -4683,7 +4676,7 @@
 									"urlencoded": []
 								},
 								"url": {
-									"raw": "{{LEAVE_APP_URL}}/my-leave-allowance?leave_type_id=20",
+									"raw": "{{LEAVE_APP_URL}}/my-leave-allowance?leave_type_id=11",
 									"host": [
 										"{{LEAVE_APP_URL}}"
 									],
@@ -4693,7 +4686,7 @@
 									"query": [
 										{
 											"key": "leave_type_id",
-											"value": "20",
+											"value": "11",
 											"description": "required"
 										}
 									]
@@ -4705,7 +4698,7 @@
 							"header": [
 								{
 									"key": "Content-Length",
-									"value": "829"
+									"value": "549"
 								},
 								{
 									"key": "Content-Type",
@@ -4713,15 +4706,15 @@
 								},
 								{
 									"key": "Ngrok-Trace-Id",
-									"value": "79132c3301b25bcd267e8d732fb51304"
+									"value": "e6ec9bad34428437a089ac84a7cb9bf6"
 								},
 								{
 									"key": "Date",
-									"value": "Wed, 13 Sep 2023 03:02:33 GMT"
+									"value": "Mon, 18 Sep 2023 10:36:36 GMT"
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"success\": true,\n    \"message\": \"User leave allowance data fetched successfully\",\n    \"data\": {\n        \"id\": \"20\",\n        \"user_id\": \"5\",\n        \"leave_type_id\": \"20\",\n        \"leave_type\": {\n            \"id\": \"20\",\n            \"initial_name\": \"Bereavement\",\n            \"name\": \"Bereavement Leave\",\n            \"description\": \"Suami/Istri, Orangtua/Mertua, Anak/Menantu meninggal dunia\",\n            \"note\": \"(Different City)\",\n            \"illustration\": \"/file/open/image/leave_type/1694501400097.jpg\",\n            \"default_duration\": 2,\n            \"created_at\": \"2023-09-12T06:50:01Z\",\n            \"updated_at\": \"null\",\n            \"deleted_at\": \"2023-09-12T07:17:44Z\"\n        },\n        \"duration\": 2,\n        \"created_at\": \"2023-09-12T07:31:40Z\",\n        \"updated_at\": \"null\",\n        \"deleted_at\": \"null\"\n    }\n}"
+							"body": "{\n    \"success\": true,\n    \"message\": \"User leave allowance data fetched successfully\",\n    \"data\": {\n        \"id\": \"36\",\n        \"user_id\": \"7\",\n        \"leave_type_id\": \"11\",\n        \"leave_type\": {\n            \"id\": \"11\",\n            \"initial_name\": \"Annual\",\n            \"name\": \"Annual Leave\",\n            \"description\": \"Cuti Tahunan\",\n            \"note\": null,\n            \"illustration\": \"/file/open/image/leave_type/1694498446373.jpg\",\n            \"default_duration\": 12\n        },\n        \"duration\": 12,\n        \"used_duration\": 5\n    }\n}"
 						},
 						{
 							"name": "My Leave Allowance - Not Found",
@@ -8464,6 +8457,1153 @@
 							],
 							"cookie": [],
 							"body": "{\n    \"success\": true,\n    \"message\": \"Successfully added leave request data\",\n    \"data\": {\n        \"message\": \"Successfully added leave request data\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Fetch Leave Request List",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJodHRwczovL2xhY2V3aW5nLWh1bW9yb3VzLWFsbGVnZWRseS5uZ3Jvay1mcmVlLmFwcC91c2VyIiwiaXNzIjoiaHR0cHM6Ly9sYWNld2luZy1odW1vcm91cy1hbGxlZ2VkbHkubmdyb2stZnJlZS5hcHAiLCJpZCI6IjciLCJlbWFpbCI6InVzZXIxQGdtYWlsLmNvbSIsIm5hbWUiOiJVc2VyIFNhdHUgVXBkYXRlZCIsImlzX3N1cGVyX3Zpc29yIjpmYWxzZSwiaXNfaGNtIjpmYWxzZSwiaXNfcmVmcmVzaF90b2tlbiI6ZmFsc2UsImV4cCI6MTY5NTE2MzMxOX0.WTchrnA9YIHNLGy7Dtwh9oGXRD32RfoNNvvK5ADu1dY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"page\": 0,\r\n    \"size\": 10,\r\n    \"status\": [\"APPROVED\", \"PENDING\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LEAVE_APP_URL}}/my-leave-requests",
+							"host": [
+								"{{LEAVE_APP_URL}}"
+							],
+							"path": [
+								"my-leave-requests"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Fetch Leave Request List - Success without status filter",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"page\": 0,\r\n    \"size\": 10,\r\n    \"status\": null\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{LEAVE_APP_URL}}/my-leave-requests",
+									"host": [
+										"{{LEAVE_APP_URL}}"
+									],
+									"path": [
+										"my-leave-requests"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Length",
+									"value": "2136"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Ngrok-Trace-Id",
+									"value": "a5705ef464349276e86f9bfdc2f74878"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 19 Sep 2023 02:30:10 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"List data fetched successfully\",\n    \"data\": [\n        {\n            \"id\": \"23\",\n            \"user_id\": \"7\",\n            \"leave_type_id\": \"11\",\n            \"leave_type\": {\n                \"id\": \"11\",\n                \"initial_name\": \"Annual\",\n                \"name\": \"Annual Leave\",\n                \"description\": \"Cuti Tahunan\",\n                \"note\": null,\n                \"illustration\": \"/file/open/image/leave_type/1694498446373.jpg\",\n                \"default_duration\": 12\n            },\n            \"doctor_note\": \"/file/open/image/doctor_note/1695016026575.jpg\",\n            \"start_date\": \"2023-09-10T00:00:00Z\",\n            \"end_date\": \"2023-09-13T00:00:00Z\",\n            \"total_leave\": 4,\n            \"reason\": \"Healing untuk mental health kedua\",\n            \"first_super_visor_id\": \"10\",\n            \"second_super_visor_id\": \"11\",\n            \"status\": \"PENDING\",\n            \"created_at\": \"2023-09-18T05:47:07Z\",\n            \"updated_at\": \"2023-09-19T00:58:38Z\",\n            \"deleted_at\": \"null\",\n            \"allowed_leave_duration\": 4\n        },\n        {\n            \"id\": \"21\",\n            \"user_id\": \"7\",\n            \"leave_type_id\": \"11\",\n            \"leave_type\": {\n                \"id\": \"11\",\n                \"initial_name\": \"Annual\",\n                \"name\": \"Annual Leave\",\n                \"description\": \"Cuti Tahunan\",\n                \"note\": null,\n                \"illustration\": \"/file/open/image/leave_type/1694498446373.jpg\",\n                \"default_duration\": 12\n            },\n            \"doctor_note\": \"/file/open/image/doctor_note/1694771849325.jpg\",\n            \"start_date\": \"2023-09-12T00:00:00Z\",\n            \"end_date\": \"2023-09-13T00:00:00Z\",\n            \"total_leave\": 2,\n            \"reason\": \"Healing untuk mental health\",\n            \"first_super_visor_id\": \"10\",\n            \"second_super_visor_id\": \"11\",\n            \"status\": \"APPROVED\",\n            \"created_at\": \"2023-09-15T09:57:29Z\",\n            \"updated_at\": \"2023-09-19T00:55:59Z\",\n            \"deleted_at\": \"null\",\n            \"allowed_leave_duration\": 1\n        }\n    ],\n    \"total_data\": 2\n}"
+						},
+						{
+							"name": "Fetch Leave Request List - Success with status filter",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"page\": 0,\r\n    \"size\": 10,\r\n    \"status\": [\"APPROVED\", \"PENDING\"]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{LEAVE_APP_URL}}/my-leave-requests",
+									"host": [
+										"{{LEAVE_APP_URL}}"
+									],
+									"path": [
+										"my-leave-requests"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Length",
+									"value": "2136"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Ngrok-Trace-Id",
+									"value": "26d7bd2a5d60801cb4b0ac1982fd05d9"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 19 Sep 2023 02:28:36 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"List data fetched successfully\",\n    \"data\": [\n        {\n            \"id\": \"23\",\n            \"user_id\": \"7\",\n            \"leave_type_id\": \"11\",\n            \"leave_type\": {\n                \"id\": \"11\",\n                \"initial_name\": \"Annual\",\n                \"name\": \"Annual Leave\",\n                \"description\": \"Cuti Tahunan\",\n                \"note\": null,\n                \"illustration\": \"/file/open/image/leave_type/1694498446373.jpg\",\n                \"default_duration\": 12\n            },\n            \"doctor_note\": \"/file/open/image/doctor_note/1695016026575.jpg\",\n            \"start_date\": \"2023-09-10T00:00:00Z\",\n            \"end_date\": \"2023-09-13T00:00:00Z\",\n            \"total_leave\": 4,\n            \"reason\": \"Healing untuk mental health kedua\",\n            \"first_super_visor_id\": \"10\",\n            \"second_super_visor_id\": \"11\",\n            \"status\": \"PENDING\",\n            \"created_at\": \"2023-09-18T05:47:07Z\",\n            \"updated_at\": \"2023-09-19T00:58:38Z\",\n            \"deleted_at\": \"null\",\n            \"allowed_leave_duration\": 4\n        },\n        {\n            \"id\": \"21\",\n            \"user_id\": \"7\",\n            \"leave_type_id\": \"11\",\n            \"leave_type\": {\n                \"id\": \"11\",\n                \"initial_name\": \"Annual\",\n                \"name\": \"Annual Leave\",\n                \"description\": \"Cuti Tahunan\",\n                \"note\": null,\n                \"illustration\": \"/file/open/image/leave_type/1694498446373.jpg\",\n                \"default_duration\": 12\n            },\n            \"doctor_note\": \"/file/open/image/doctor_note/1694771849325.jpg\",\n            \"start_date\": \"2023-09-12T00:00:00Z\",\n            \"end_date\": \"2023-09-13T00:00:00Z\",\n            \"total_leave\": 2,\n            \"reason\": \"Healing untuk mental health\",\n            \"first_super_visor_id\": \"10\",\n            \"second_super_visor_id\": \"11\",\n            \"status\": \"APPROVED\",\n            \"created_at\": \"2023-09-15T09:57:29Z\",\n            \"updated_at\": \"2023-09-19T00:55:59Z\",\n            \"deleted_at\": \"null\",\n            \"allowed_leave_duration\": 1\n        }\n    ],\n    \"total_data\": 2\n}"
+						},
+						{
+							"name": "Fetch Leave Request List - Unauthorized",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"page\": 0,\r\n    \"size\": 10,\r\n    \"status\": [\"APPROVED\", \"PENDING\"]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{LEAVE_APP_URL}}/my-leave-requests",
+									"host": [
+										"{{LEAVE_APP_URL}}"
+									],
+									"path": [
+										"my-leave-requests"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Length",
+									"value": "79"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Ngrok-Trace-Id",
+									"value": "a2caedbb1cae7578fb9cc03365f23a62"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 18 Sep 2023 23:38:31 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": false,\n    \"message\": \"Expired token or Unauthorized access\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Fetch Leave Request",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJodHRwczovL2xhY2V3aW5nLWh1bW9yb3VzLWFsbGVnZWRseS5uZ3Jvay1mcmVlLmFwcC91c2VyIiwiaXNzIjoiaHR0cHM6Ly9sYWNld2luZy1odW1vcm91cy1hbGxlZ2VkbHkubmdyb2stZnJlZS5hcHAiLCJpZCI6IjciLCJlbWFpbCI6InVzZXIxQGdtYWlsLmNvbSIsIm5hbWUiOiJVc2VyIFNhdHUgVXBkYXRlZCIsImlzX3N1cGVyX3Zpc29yIjpmYWxzZSwiaXNfaGNtIjpmYWxzZSwiaXNfcmVmcmVzaF90b2tlbiI6ZmFsc2UsImV4cCI6MTY5NTE3NTQ1MX0.jsMFVKUHeOz2sI5WYPr-BWJn-vskIVED_dosAEpJp8A",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LEAVE_APP_URL}}/leave-requests/detail/21",
+							"host": [
+								"{{LEAVE_APP_URL}}"
+							],
+							"path": [
+								"leave-requests",
+								"detail",
+								"21"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Fetch Leave Request - Unauthorized",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{LEAVE_APP_URL}}/leave-requests/detail/23",
+									"host": [
+										"{{LEAVE_APP_URL}}"
+									],
+									"path": [
+										"leave-requests",
+										"detail",
+										"23"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Length",
+									"value": "79"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Ngrok-Trace-Id",
+									"value": "20f48ddf437ca4476ad5e6ab50693d96"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 19 Sep 2023 02:08:54 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": false,\n    \"message\": \"Expired token or Unauthorized access\"\n}"
+						},
+						{
+							"name": "Fetch Leave Request - Not Found",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{LEAVE_APP_URL}}/leave-requests/detail/230",
+									"host": [
+										"{{LEAVE_APP_URL}}"
+									],
+									"path": [
+										"leave-requests",
+										"detail",
+										"230"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Length",
+									"value": "52"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Ngrok-Trace-Id",
+									"value": "f58b6a3f6f88524c78cf30ebfb344bfc"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 19 Sep 2023 02:08:35 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": false,\n    \"message\": \"Not Found\"\n}"
+						},
+						{
+							"name": "Fetch Leave Request - Success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{LEAVE_APP_URL}}/leave-requests/detail/21",
+									"host": [
+										"{{LEAVE_APP_URL}}"
+									],
+									"path": [
+										"leave-requests",
+										"detail",
+										"21"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Length",
+									"value": "5063"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Ngrok-Trace-Id",
+									"value": "6fda06bd16e72688bdd83a19ab147305"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 19 Sep 2023 02:24:58 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Single data fetched successfully\",\n    \"data\": {\n        \"id\": \"21\",\n        \"user_id\": \"7\",\n        \"requester\": {\n            \"id\": \"7\",\n            \"email\": \"user1@gmail.com\",\n            \"name\": \"User Satu Updated\",\n            \"photo\": \"/file/open/image/profile_photo/1694681171238.jpg\",\n            \"nip\": \"123456789\",\n            \"role_id\": \"5\",\n            \"role\": {\n                \"id\": \"5\",\n                \"name\": \"Pengembang Perangkat Lunak\"\n            },\n            \"division_id\": \"18\",\n            \"department_id\": \"6\",\n            \"human_capital_management_id\": \"2\",\n            \"is_super_visor\": false,\n            \"is_hcm\": false\n        },\n        \"leave_type_id\": \"11\",\n        \"leave_type\": {\n            \"id\": \"11\",\n            \"initial_name\": \"Annual\",\n            \"name\": \"Annual Leave\",\n            \"description\": \"Cuti Tahunan\",\n            \"note\": null,\n            \"illustration\": \"/file/open/image/leave_type/1694498446373.jpg\",\n            \"default_duration\": 12\n        },\n        \"doctor_note\": \"/file/open/image/doctor_note/1694771849325.jpg\",\n        \"start_date\": \"2023-09-12T00:00:00Z\",\n        \"end_date\": \"2023-09-13T00:00:00Z\",\n        \"total_leave\": 2,\n        \"reason\": \"Healing untuk mental health\",\n        \"first_super_visor_id\": \"10\",\n        \"second_super_visor_id\": \"11\",\n        \"status\": \"APPROVED\",\n        \"created_at\": \"2023-09-15T09:57:29Z\",\n        \"updated_at\": \"2023-09-19T00:55:59Z\",\n        \"deleted_at\": \"null\",\n        \"on_going_projects\": [\n            {\n                \"id\": \"30\",\n                \"leave_request_id\": \"21\",\n                \"name\": \"Project 3\"\n            },\n            {\n                \"id\": \"29\",\n                \"leave_request_id\": \"21\",\n                \"name\": \"Project 2\"\n            },\n            {\n                \"id\": \"28\",\n                \"leave_request_id\": \"21\",\n                \"name\": \"Project 1\"\n            }\n        ],\n        \"leave_approvals\": [\n            {\n                \"id\": \"17\",\n                \"submitted_leave_request_id\": \"21\",\n                \"assigned_user_id\": \"5\",\n                \"assigned_user\": {\n                    \"id\": \"5\",\n                    \"email\": \"hcm1@gmail.com\",\n                    \"name\": \"HCM Satu\",\n                    \"photo\": null,\n                    \"nip\": null,\n                    \"role_id\": \"5\",\n                    \"role\": {\n                        \"id\": \"5\",\n                        \"name\": \"Pengembang Perangkat Lunak\"\n                    },\n                    \"division_id\": \"25\",\n                    \"department_id\": \"7\",\n                    \"human_capital_management_id\": \"null\",\n                    \"is_super_visor\": false,\n                    \"is_hcm\": true\n                },\n                \"annotation\": null,\n                \"allowed_start_date\": \"2023-09-12T00:00:00Z\",\n                \"allowed_end_date\": \"2023-09-13T00:00:00Z\",\n                \"allowed_duration\": 2,\n                \"status\": \"APPROVED\",\n                \"approved_date\": \"2023-09-18T05:44:36Z\"\n            },\n            {\n                \"id\": \"16\",\n                \"submitted_leave_request_id\": \"21\",\n                \"assigned_user_id\": \"11\",\n                \"assigned_user\": {\n                    \"id\": \"11\",\n                    \"email\": \"sv2@gmail.com\",\n                    \"name\": \"Super Visor Dua\",\n                    \"photo\": null,\n                    \"nip\": null,\n                    \"role_id\": \"null\",\n                    \"division_id\": \"null\",\n                    \"department_id\": \"null\",\n                    \"human_capital_management_id\": \"3\",\n                    \"is_super_visor\": true,\n                    \"is_hcm\": false\n                },\n                \"annotation\": null,\n                \"allowed_start_date\": \"2023-09-12T00:00:00Z\",\n                \"allowed_end_date\": \"2023-09-13T00:00:00Z\",\n                \"allowed_duration\": 2,\n                \"status\": \"APPROVED\",\n                \"approved_date\": \"2023-09-18T05:44:36Z\"\n            },\n            {\n                \"id\": \"15\",\n                \"submitted_leave_request_id\": \"21\",\n                \"assigned_user_id\": \"10\",\n                \"assigned_user\": {\n                    \"id\": \"10\",\n                    \"email\": \"sv1@gmail.com\",\n                    \"name\": \"Super Visor Satu\",\n                    \"photo\": null,\n                    \"nip\": null,\n                    \"role_id\": \"null\",\n                    \"division_id\": \"null\",\n                    \"department_id\": \"null\",\n                    \"human_capital_management_id\": \"2\",\n                    \"is_super_visor\": true,\n                    \"is_hcm\": false\n                },\n                \"annotation\": \"Oke, Tapi tanggal 13 ada meeting\",\n                \"allowed_start_date\": \"2023-09-12T00:00:00Z\",\n                \"allowed_end_date\": \"2023-09-12T00:00:00Z\",\n                \"allowed_duration\": 1,\n                \"status\": \"APPROVED\",\n                \"approved_date\": \"2023-09-19T00:55:59Z\"\n            }\n        ],\n        \"allowed_leave_duration\": 1\n    }\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Assigned Leave Approval",
+			"item": [
+				{
+					"name": "Fetch My Assigned Approval List",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJodHRwczovL2xhY2V3aW5nLWh1bW9yb3VzLWFsbGVnZWRseS5uZ3Jvay1mcmVlLmFwcC91c2VyIiwiaXNzIjoiaHR0cHM6Ly9sYWNld2luZy1odW1vcm91cy1hbGxlZ2VkbHkubmdyb2stZnJlZS5hcHAiLCJpZCI6IjExIiwiZW1haWwiOiJzdjJAZ21haWwuY29tIiwibmFtZSI6IlN1cGVyIFZpc29yIER1YSIsImlzX3N1cGVyX3Zpc29yIjp0cnVlLCJpc19oY20iOmZhbHNlLCJpc19yZWZyZXNoX3Rva2VuIjpmYWxzZSwiZXhwIjoxNjk1MTY2MjkzfQ.eDskPilrUE-vFgqLObRdYCenSKA1pdjkMOrkwrP_xS8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"page\": 0,\r\n    \"size\": 10,\r\n    \"status\": [\"APPROVED\", \"PENDING\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LEAVE_APP_URL}}/my-assigned-approvals",
+							"host": [
+								"{{LEAVE_APP_URL}}"
+							],
+							"path": [
+								"my-assigned-approvals"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Fetch Assigned Approval List - Forbidden non approver",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"page\": 0,\r\n    \"size\": 10,\r\n    \"status\": \"pending\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{LEAVE_APP_URL}}/my-assigned-approvals",
+									"host": [
+										"{{LEAVE_APP_URL}}"
+									],
+									"path": [
+										"my-assigned-approvals"
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Length",
+									"value": "88"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Ngrok-Trace-Id",
+									"value": "df860f2da6835e32b0ce28af607dc18d"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 16 Sep 2023 11:40:14 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": false,\n    \"message\": \"Forbidden. Access only for HCM or Super Visor\"\n}"
+						},
+						{
+							"name": "Fetch My Assigned Approval List - Success with status filter",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"page\": 0,\r\n    \"size\": 10,\r\n    \"status\": [\"APPROVED\", \"PENDING\"]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{LEAVE_APP_URL}}/my-assigned-approvals",
+									"host": [
+										"{{LEAVE_APP_URL}}"
+									],
+									"path": [
+										"my-assigned-approvals"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Length",
+									"value": "1304"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Ngrok-Trace-Id",
+									"value": "3ec53f582a80c876e9b78471cb323c19"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 18 Sep 2023 23:33:02 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"List data fetched successfully\",\n    \"data\": [\n        {\n            \"id\": \"22\",\n            \"status\": \"PENDING\",\n            \"submitted_leave_request_start_date\": \"2023-09-10T00:00:00Z\",\n            \"submitted_leave_request_end_date\": \"2023-09-13T00:00:00Z\",\n            \"submitted_leave_request_total_duration\": 4,\n            \"submitted_leave_request_created_at\": \"2023-09-18T05:47:07Z\",\n            \"requester_name\": \"User Satu Updated\",\n            \"requester_photo\": \"/file/open/image/profile_photo/1694681171238.jpg\",\n            \"requester_role\": \"Pengembang Perangkat Lunak\",\n            \"leave_type_name\": \"Annual Leave\"\n        },\n        {\n            \"id\": \"16\",\n            \"status\": \"APPROVED\",\n            \"submitted_leave_request_start_date\": \"2023-09-12T00:00:00Z\",\n            \"submitted_leave_request_end_date\": \"2023-09-13T00:00:00Z\",\n            \"submitted_leave_request_total_duration\": 2,\n            \"submitted_leave_request_created_at\": \"2023-09-15T09:57:29Z\",\n            \"requester_name\": \"User Satu Updated\",\n            \"requester_photo\": \"/file/open/image/profile_photo/1694681171238.jpg\",\n            \"requester_role\": \"Pengembang Perangkat Lunak\",\n            \"leave_type_name\": \"Annual Leave\"\n        }\n    ],\n    \"total_data\": 2\n}"
+						},
+						{
+							"name": "Fetch Assigned Approval List - Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"page\": 0,\r\n    \"size\": 10\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{LEAVE_APP_URL}}/my-assigned-approvals",
+									"host": [
+										"{{LEAVE_APP_URL}}"
+									],
+									"path": [
+										"my-assigned-approvals"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Length",
+									"value": "708"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Ngrok-Trace-Id",
+									"value": "e516533abff36aee758e337e8e765468"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 15 Sep 2023 10:52:07 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"List data fetched successfully\",\n    \"data\": [\n        {\n            \"id\": \"15\",\n            \"status\": \"PENDING\",\n            \"submitted_leave_request_start_date\": \"2023-09-12T00:00:00Z\",\n            \"submitted_leave_request_end_date\": \"2023-09-13T00:00:00Z\",\n            \"submitted_leave_request_total_duration\": 2,\n            \"submitted_leave_request_created_at\": \"2023-09-15T09:57:29Z\",\n            \"requester_name\": \"User Satu Updated\",\n            \"requester_photo\": \"/file/open/image/profile_photo/1694681171238.jpg\",\n            \"requester_role\": \"Pengembang Perangkat Lunak\",\n            \"leave_type_name\": \"Annual Leave\"\n        }\n    ],\n    \"total_data\": 1\n}"
+						}
+					]
+				},
+				{
+					"name": "Reject Assigned Approval",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJodHRwczovL2xhY2V3aW5nLWh1bW9yb3VzLWFsbGVnZWRseS5uZ3Jvay1mcmVlLmFwcC91c2VyIiwiaXNzIjoiaHR0cHM6Ly9sYWNld2luZy1odW1vcm91cy1hbGxlZ2VkbHkubmdyb2stZnJlZS5hcHAiLCJpZCI6IjEwIiwiZW1haWwiOiJzdjFAZ21haWwuY29tIiwibmFtZSI6IlN1cGVyIFZpc29yIFNhdHUiLCJpc19zdXBlcl92aXNvciI6dHJ1ZSwiaXNfaGNtIjpmYWxzZSwiaXNfcmVmcmVzaF90b2tlbiI6ZmFsc2UsImV4cCI6MTY5NDk1MDg3MX0.GUktBLdmUXm5gYR8GqPz-jYVxWx9A7g8Zgx2lJR1gjk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"approval_id\": 15,\r\n    \"annotation\": \"Ada meeting\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LEAVE_APP_URL}}/approval/reject",
+							"host": [
+								"{{LEAVE_APP_URL}}"
+							],
+							"path": [
+								"approval",
+								"reject"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Reject Leave Approval - Forbidden non approval",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"approval_id\": 15,\r\n    \"annotation\": \"Ada meeting\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{LEAVE_APP_URL}}/approval/reject",
+									"host": [
+										"{{LEAVE_APP_URL}}"
+									],
+									"path": [
+										"approval",
+										"reject"
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Length",
+									"value": "88"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Ngrok-Trace-Id",
+									"value": "df865bb25e0096f23ce3743ce3c4178c"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 16 Sep 2023 12:04:59 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": false,\n    \"message\": \"Forbidden. Access only for HCM or Super Visor\"\n}"
+						},
+						{
+							"name": "Reject Leave Approval - Success",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"approval_id\": 15,\r\n    \"annotation\": \"Ada meeting\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{LEAVE_APP_URL}}/approval/reject",
+									"host": [
+										"{{LEAVE_APP_URL}}"
+									],
+									"path": [
+										"approval",
+										"reject"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Length",
+									"value": "175"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Ngrok-Trace-Id",
+									"value": "530c67082a2b011d4367bffedc7b47c9"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 16 Sep 2023 11:47:30 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Leave approval has been rejected successfully\",\n    \"data\": {\n        \"message\": \"Leave approval has been rejected successfully\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Fetch Assigned Approval",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJodHRwczovL2xhY2V3aW5nLWh1bW9yb3VzLWFsbGVnZWRseS5uZ3Jvay1mcmVlLmFwcC91c2VyIiwiaXNzIjoiaHR0cHM6Ly9sYWNld2luZy1odW1vcm91cy1hbGxlZ2VkbHkubmdyb2stZnJlZS5hcHAiLCJpZCI6IjEwIiwiZW1haWwiOiJzdjFAZ21haWwuY29tIiwibmFtZSI6IlN1cGVyIFZpc29yIFNhdHUiLCJpc19zdXBlcl92aXNvciI6dHJ1ZSwiaXNfaGNtIjpmYWxzZSwiaXNfcmVmcmVzaF90b2tlbiI6ZmFsc2UsImV4cCI6MTY5NTA5MjU4NX0.iq6t5OERp-LC2sv3S12g60Z4RK94kQPCmsBXk9wlB6U",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LEAVE_APP_URL}}/approval/detail/15",
+							"host": [
+								"{{LEAVE_APP_URL}}"
+							],
+							"path": [
+								"approval",
+								"detail",
+								"15"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Fetch Assigned Approval - Not Found",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{LEAVE_APP_URL}}/approval/detail/150",
+									"host": [
+										"{{LEAVE_APP_URL}}"
+									],
+									"path": [
+										"approval",
+										"detail",
+										"150"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Length",
+									"value": "52"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Ngrok-Trace-Id",
+									"value": "04de307a7c024bd16ab91443ff57a47c"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 18 Sep 2023 03:47:31 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": false,\n    \"message\": \"Not Found\"\n}"
+						},
+						{
+							"name": "Fetch Assigned Approval - Forbidden non approver",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{LEAVE_APP_URL}}/approval/detail/15",
+									"host": [
+										"{{LEAVE_APP_URL}}"
+									],
+									"path": [
+										"approval",
+										"detail",
+										"15"
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Length",
+									"value": "88"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Ngrok-Trace-Id",
+									"value": "4a1f31f7d95f2928677ea005d7a14122"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 18 Sep 2023 03:48:01 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": false,\n    \"message\": \"Forbidden. Access only for HCM or Super Visor\"\n}"
+						},
+						{
+							"name": "Fetch Assigned Approval - Success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{LEAVE_APP_URL}}/approval/detail/15",
+									"host": [
+										"{{LEAVE_APP_URL}}"
+									],
+									"path": [
+										"approval",
+										"detail",
+										"15"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Length",
+									"value": "4105"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Ngrok-Trace-Id",
+									"value": "241d8ef340f722bd639ff68a87e5593c"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 18 Sep 2023 03:45:04 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Single data fetched successfully\",\n    \"data\": {\n        \"id\": \"15\",\n        \"status\": \"PENDING\",\n        \"submitted_leave_request_start_date\": \"2023-09-12T00:00:00Z\",\n        \"submitted_leave_request_end_date\": \"2023-09-13T00:00:00Z\",\n        \"submitted_leave_request_total_duration\": 2,\n        \"submitted_leave_request_created_at\": \"2023-09-15T09:57:29Z\",\n        \"reason\": \"Healing untuk mental health\",\n        \"requester_name\": \"User Satu Updated\",\n        \"requester_photo\": \"/file/open/image/profile_photo/1694681171238.jpg\",\n        \"requester_role\": \"Pengembang Perangkat Lunak\",\n        \"leave_type_name\": \"Annual Leave\",\n        \"on_going_projects\": [\n            {\n                \"id\": \"30\",\n                \"leave_request_id\": \"21\",\n                \"name\": \"Project 3\"\n            },\n            {\n                \"id\": \"29\",\n                \"leave_request_id\": \"21\",\n                \"name\": \"Project 2\"\n            },\n            {\n                \"id\": \"28\",\n                \"leave_request_id\": \"21\",\n                \"name\": \"Project 1\"\n            }\n        ],\n        \"leave_approvals\": [\n            {\n                \"id\": \"15\",\n                \"submitted_leave_request_id\": \"21\",\n                \"assigned_user_id\": \"10\",\n                \"assigned_user\": {\n                    \"id\": \"10\",\n                    \"email\": \"sv1@gmail.com\",\n                    \"name\": \"Super Visor Satu\",\n                    \"photo\": null,\n                    \"nip\": null,\n                    \"role_id\": \"null\",\n                    \"division_id\": \"null\",\n                    \"department_id\": \"null\",\n                    \"human_capital_management_id\": \"2\",\n                    \"is_super_visor\": true,\n                    \"is_hcm\": false\n                },\n                \"annotation\": null,\n                \"allowed_start_date\": \"2023-09-12T00:00:00Z\",\n                \"allowed_end_date\": \"2023-09-13T00:00:00Z\",\n                \"allowed_duration\": 2,\n                \"status\": \"PENDING\",\n                \"approved_date\": \"null\"\n            },\n            {\n                \"id\": \"16\",\n                \"submitted_leave_request_id\": \"21\",\n                \"assigned_user_id\": \"11\",\n                \"assigned_user\": {\n                    \"id\": \"11\",\n                    \"email\": \"sv2@gmail.com\",\n                    \"name\": \"Super Visor Dua\",\n                    \"photo\": null,\n                    \"nip\": null,\n                    \"role_id\": \"null\",\n                    \"division_id\": \"null\",\n                    \"department_id\": \"null\",\n                    \"human_capital_management_id\": \"3\",\n                    \"is_super_visor\": true,\n                    \"is_hcm\": false\n                },\n                \"annotation\": null,\n                \"allowed_start_date\": \"2023-09-12T00:00:00Z\",\n                \"allowed_end_date\": \"2023-09-13T00:00:00Z\",\n                \"allowed_duration\": 2,\n                \"status\": \"PENDING\",\n                \"approved_date\": \"null\"\n            },\n            {\n                \"id\": \"17\",\n                \"submitted_leave_request_id\": \"21\",\n                \"assigned_user_id\": \"5\",\n                \"assigned_user\": {\n                    \"id\": \"5\",\n                    \"email\": \"hcm1@gmail.com\",\n                    \"name\": \"HCM Satu\",\n                    \"photo\": null,\n                    \"nip\": null,\n                    \"role_id\": \"5\",\n                    \"role\": {\n                        \"id\": \"5\",\n                        \"name\": \"Pengembang Perangkat Lunak\"\n                    },\n                    \"division_id\": \"25\",\n                    \"department_id\": \"7\",\n                    \"human_capital_management_id\": \"null\",\n                    \"is_super_visor\": false,\n                    \"is_hcm\": true\n                },\n                \"annotation\": null,\n                \"allowed_start_date\": \"2023-09-12T00:00:00Z\",\n                \"allowed_end_date\": \"2023-09-13T00:00:00Z\",\n                \"allowed_duration\": 2,\n                \"status\": \"PENDING\",\n                \"approved_date\": \"null\"\n            }\n        ]\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Approve Assigned Approval",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJodHRwczovL2xhY2V3aW5nLWh1bW9yb3VzLWFsbGVnZWRseS5uZ3Jvay1mcmVlLmFwcC91c2VyIiwiaXNzIjoiaHR0cHM6Ly9sYWNld2luZy1odW1vcm91cy1hbGxlZ2VkbHkubmdyb2stZnJlZS5hcHAiLCJpZCI6IjEwIiwiZW1haWwiOiJzdjFAZ21haWwuY29tIiwibmFtZSI6IlN1cGVyIFZpc29yIFNhdHUiLCJpc19zdXBlcl92aXNvciI6dHJ1ZSwiaXNfaGNtIjpmYWxzZSwiaXNfcmVmcmVzaF90b2tlbiI6ZmFsc2UsImV4cCI6MTY5NTA5Njc2N30.07b6Yd4YnfIXzqvidPo5il4xBVV23S0rHxlwvWQU5Nk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"approval_id\": 15,\r\n    \"annotation\": \"Oke, Tapi tanggal 13 ada meeting\",\r\n    \"allowed_start_date\": \"2023-09-12T00:00:00Z\",\r\n    \"allowed_end_date\": \"2023-09-12T00:00:00Z\",\r\n    \"allowed_duration\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LEAVE_APP_URL}}/approval/approve",
+							"host": [
+								"{{LEAVE_APP_URL}}"
+							],
+							"path": [
+								"approval",
+								"approve"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Approve Assigned Approval - Success",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"approval_id\": 15,\r\n    \"annotation\": \"Oke, Tapi tanggal 13 ada meeting\",\r\n    \"allowed_start_date\": \"2023-09-12T00:00:00Z\",\r\n    \"allowed_end_date\": \"2023-09-12T00:00:00Z\",\r\n    \"allowed_duration\": 1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{LEAVE_APP_URL}}/approval/approve",
+									"host": [
+										"{{LEAVE_APP_URL}}"
+									],
+									"path": [
+										"approval",
+										"approve"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Length",
+									"value": "175"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Ngrok-Trace-Id",
+									"value": "4af94ecfdecaa7ca94993139c9a06fa7"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 18 Sep 2023 04:14:18 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Leave approval has been approved successfully\",\n    \"data\": {\n        \"message\": \"Leave approval has been approved successfully\"\n    }\n}"
+						},
+						{
+							"name": "Approve Assigned Approval - Forbidden non approver",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"approval_id\": 15,\r\n    \"annotation\": \"Oke, Tapi tanggal 13 ada meeting\",\r\n    \"allowed_start_date\": \"2023-09-12T00:00:00Z\",\r\n    \"allowed_end_date\": \"2023-09-12T00:00:00Z\",\r\n    \"allowed_duration\": 1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{LEAVE_APP_URL}}/approval/approve",
+									"host": [
+										"{{LEAVE_APP_URL}}"
+									],
+									"path": [
+										"approval",
+										"approve"
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Length",
+									"value": "88"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Ngrok-Trace-Id",
+									"value": "656c0cd3f67aff20550e58c951c70da5"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 18 Sep 2023 04:17:02 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": false,\n    \"message\": \"Forbidden. Access only for HCM or Super Visor\"\n}"
+						},
+						{
+							"name": "Approve Assigned Approval - Not Implemented",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"approval_id\": 150,\r\n    \"annotation\": \"Oke, Tapi tanggal 13 ada meeting\",\r\n    \"allowed_start_date\": \"2023-09-12T00:00:00Z\",\r\n    \"allowed_end_date\": \"2023-09-12T00:00:00Z\",\r\n    \"allowed_duration\": 1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{LEAVE_APP_URL}}/approval/approve",
+									"host": [
+										"{{LEAVE_APP_URL}}"
+									],
+									"path": [
+										"approval",
+										"approve"
+									]
+								}
+							},
+							"status": "Not Implemented",
+							"code": 501,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Length",
+									"value": "66"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Ngrok-Trace-Id",
+									"value": "7eb88f2677ad75c4c16f27034eaff020"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 18 Sep 2023 04:16:24 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": false,\n    \"message\": \"Changes not implemented\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Cancel Assigned Approval",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJodHRwczovL2xhY2V3aW5nLWh1bW9yb3VzLWFsbGVnZWRseS5uZ3Jvay1mcmVlLmFwcC91c2VyIiwiaXNzIjoiaHR0cHM6Ly9sYWNld2luZy1odW1vcm91cy1hbGxlZ2VkbHkubmdyb2stZnJlZS5hcHAiLCJpZCI6IjEwIiwiZW1haWwiOiJzdjFAZ21haWwuY29tIiwibmFtZSI6IlN1cGVyIFZpc29yIFNhdHUiLCJpc19zdXBlcl92aXNvciI6dHJ1ZSwiaXNfaGNtIjpmYWxzZSwiaXNfcmVmcmVzaF90b2tlbiI6ZmFsc2UsImV4cCI6MTY5NTA5Njc2N30.07b6Yd4YnfIXzqvidPo5il4xBVV23S0rHxlwvWQU5Nk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{LEAVE_APP_URL}}/approval/cancel/15",
+							"host": [
+								"{{LEAVE_APP_URL}}"
+							],
+							"path": [
+								"approval",
+								"cancel",
+								"15"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Cancel Assigned Approval - Not Implemented",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "{{LEAVE_APP_URL}}/approval/cancel/150",
+									"host": [
+										"{{LEAVE_APP_URL}}"
+									],
+									"path": [
+										"approval",
+										"cancel",
+										"150"
+									]
+								}
+							},
+							"status": "Not Implemented",
+							"code": 501,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Length",
+									"value": "66"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Ngrok-Trace-Id",
+									"value": "22a97e28e90bef661cb8acf204bf93b5"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 18 Sep 2023 04:24:56 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": false,\n    \"message\": \"Changes not implemented\"\n}"
+						},
+						{
+							"name": "Cancel Assigned Approval - Success",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "{{LEAVE_APP_URL}}/approval/cancel/15",
+									"host": [
+										"{{LEAVE_APP_URL}}"
+									],
+									"path": [
+										"approval",
+										"cancel",
+										"15"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Length",
+									"value": "175"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Ngrok-Trace-Id",
+									"value": "7c76738171ded98e26cb61197de918c9"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 18 Sep 2023 04:24:12 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Leave approval has been canceled successfully\",\n    \"data\": {\n        \"message\": \"Leave approval has been canceled successfully\"\n    }\n}"
+						},
+						{
+							"name": "Cancel Assigned Approval - Forbidden non approver",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "{{LEAVE_APP_URL}}/approval/cancel/15",
+									"host": [
+										"{{LEAVE_APP_URL}}"
+									],
+									"path": [
+										"approval",
+										"cancel",
+										"15"
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Length",
+									"value": "88"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Ngrok-Trace-Id",
+									"value": "4a8b0e206d13c62db98af78711c5e126"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 18 Sep 2023 04:25:24 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": false,\n    \"message\": \"Forbidden. Access only for HCM or Super Visor\"\n}"
 						}
 					]
 				}
