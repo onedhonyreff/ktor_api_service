@@ -3,6 +3,7 @@ package id.bts.route
 import id.bts.database.DBConnection
 import id.bts.entities.SuperVisorEntity
 import id.bts.entities.UserEntity
+import id.bts.model.request.PagingRequest
 import id.bts.model.request.user.SuperVisorRequest
 import id.bts.model.response.BaseResponse
 import id.bts.model.response.simple_message.SimpleMessage
@@ -43,7 +44,7 @@ fun Application.configureSuperVisorRoute() {
       }
 
       post("/super-visors") {
-        val pagingRequest = call.receivePagingRequest()
+        val pagingRequest = call.receivePagingRequest<PagingRequest>()
         DBConnection.database?.let { database ->
           val superVisors = database.from(SuperVisorEntity)
             .leftJoin(UserEntity, on = UserEntity.id eq SuperVisorEntity.userId)

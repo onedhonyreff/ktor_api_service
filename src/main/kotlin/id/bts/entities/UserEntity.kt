@@ -22,5 +22,8 @@ open class UserEntity(alias: String?) : Table<Nothing>("users", alias) {
 
   companion object : UserEntity(null) {
     const val HCM_USER_ALIAS = "hcm_user_alias"
+    const val FIRST_SV_USER_ALIAS = "first_sv_user_alias"
+    const val SECOND_SV_USER_ALIAS = "second_sv_user_alias"
+    const val APPROVER_USER_ALIAS = "approver_user_alias"
   }
 }

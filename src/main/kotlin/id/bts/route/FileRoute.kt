@@ -1,5 +1,6 @@
 package id.bts.route
 
+import id.bts.utils.DataConstants
 import id.bts.utils.Extensions.returnNotFoundResponse
 import id.bts.utils.Extensions.returnParameterErrorResponse
 import io.ktor.http.*
@@ -21,14 +22,14 @@ fun Application.configureFileRouting() {
         call.returnNotFoundResponse()
       } else {
         when (fileAction) {
-          "open" -> {
+          DataConstants.FileAccessType.OPEN -> {
             call.response.header(
               HttpHeaders.ContentDisposition,
               ContentDisposition.Inline.toString()
             )
           }
 
-          "download" -> {
+          DataConstants.FileAccessType.DOWNLOAD -> {
             call.response.header(
               HttpHeaders.ContentDisposition,
               ContentDisposition.Attachment.withParameter(

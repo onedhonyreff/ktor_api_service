@@ -3,10 +3,9 @@ package id.bts.model.request
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class PagingRequest(
-  val page: Int = 0,
-  val size: Int = 10,
-  val search: String = ""
+open class PagingRequest(
+  private val page: Int = 0,
+  val size: Int = 10
 ) {
   val pagingOffset = this.page * this.size
 }

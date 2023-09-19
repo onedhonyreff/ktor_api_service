@@ -18,15 +18,15 @@ data class LeaveAllowance(
   @SerialName("leave_type")
   val leaveType: LeaveType? = null,
   val duration: Int?,
-  @SerialName("created_at")
-  val createdAt: String?,
-  @SerialName("updated_at")
-  val updatedAt: String?,
-  @SerialName("deleted_at")
-  val deletedAt: String?
+  @SerialName("used_duration")
+  val usedDuration: Int? = null
 ) {
   companion object {
-    fun transform(queryRowSet: QueryRowSet, includeUser: Boolean = true): LeaveAllowance {
+    fun transform(
+      queryRowSet: QueryRowSet,
+      includeUser: Boolean = true,
+      usedDuration: Int? = null
+    ): LeaveAllowance {
       return LeaveAllowance(
         id = queryRowSet[LeaveAllowanceEntity.id].toString(),
         userId = queryRowSet[LeaveAllowanceEntity.userId].toString(),
@@ -34,9 +34,7 @@ data class LeaveAllowance(
         user = if (includeUser) User.transform(queryRowSet) else null,
         leaveType = LeaveType.transform(queryRowSet),
         duration = queryRowSet[LeaveAllowanceEntity.duration],
-        createdAt = queryRowSet[LeaveAllowanceEntity.createdAt].toString(),
-        updatedAt = queryRowSet[LeaveAllowanceEntity.updatedAt].toString(),
-        deletedAt = queryRowSet[LeaveAllowanceEntity.deletedAt].toString()
+        usedDuration = usedDuration
       )
     }
   }

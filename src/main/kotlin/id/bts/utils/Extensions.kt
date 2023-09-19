@@ -1,6 +1,9 @@
 package id.bts.utils
 
 import id.bts.model.request.PagingRequest
+import id.bts.model.request.leave_approval.AssignedApprovalPagingRequest
+import id.bts.model.request.leave_request.SubmittedLeavePagingRequest
+import id.bts.model.request.user.UserPagingRequest
 import id.bts.model.response.BaseResponse
 import io.ktor.http.*
 import io.ktor.server.application.*
@@ -64,6 +67,15 @@ object Extensions {
     }
   }
 
+  fun JWTChallengeContext.returnForbiddenResponse(message: String? = null) {
+    runBlocking {
+      call.respond(
+        HttpStatusCode.Forbidden,
+        BaseResponse(success = false, message = message ?: "Access is not permitted to your account", null)
+      )
+    }
+  }
+
   fun String?.replaceFileName(replacement: String? = null, extension: String? = null): String {
     val fileName = replacement ?: System.currentTimeMillis().toString()
     val ext = extension ?: run {
@@ -76,15 +88,20 @@ object Extensions {
     return "${fileName}.${ext}"
   }
 
-  fun ApplicationCall.receivePagingRequest(): PagingRequest {
-    val pagingRequest = try {
+  inline fun <reified T : PagingRequest> ApplicationCall.receivePagingRequest(): T {
+    val pagingRequest: T = try {
       runBlocking {
-        receive<PagingRequest>()
+        receive<T>()
       }
     } catch (e: Exception) {
-      PagingRequest()
+      val defaultPagingRequest = when (T::class) {
+        UserPagingRequest::class -> UserPagingRequest()
+        AssignedApprovalPagingRequest::class -> AssignedApprovalPagingRequest()
+        SubmittedLeavePagingRequest::class -> SubmittedLeavePagingRequest()
+        else -> PagingRequest()
+      }
+      defaultPagingRequest as T
     }
-
     return pagingRequest
   }
 }

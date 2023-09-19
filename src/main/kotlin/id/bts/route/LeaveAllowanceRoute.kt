@@ -4,6 +4,7 @@ import id.bts.database.DBConnection
 import id.bts.entities.LeaveAllowanceEntity
 import id.bts.entities.LeaveTypeEntity
 import id.bts.entities.UserEntity
+import id.bts.model.request.PagingRequest
 import id.bts.model.request.leave_allowance.LeaveAllowanceRequest
 import id.bts.model.response.BaseResponse
 import id.bts.model.response.leave_allowance.LeaveAllowance
@@ -14,6 +15,7 @@ import id.bts.utils.Extensions.returnFailedDatabaseResponse
 import id.bts.utils.Extensions.returnNotFoundResponse
 import id.bts.utils.Extensions.returnNotImplementedResponse
 import id.bts.utils.Extensions.returnParameterErrorResponse
+import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
 import io.ktor.server.auth.jwt.*
@@ -21,6 +23,7 @@ import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import kotlinx.coroutines.runBlocking
+import org.ktorm.database.asIterable
 import org.ktorm.dsl.*
 import java.time.Instant
 
@@ -196,14 +199,35 @@ fun Application.configureLeaveAllowanceRoute() {
 
 fun ApplicationCall.getUserLeaveAllowanceList(userId: Int, includeUser: Boolean = false) {
   runBlocking {
-    val pagingRequest = receivePagingRequest()
+    val pagingRequest = receivePagingRequest<PagingRequest>()
     DBConnection.database?.let { database ->
+      val usedDurations = hashMapOf<String, Int>()
+      val queryString = generateUsedDurationQueryString(userId)
+      try {
+        database.useConnection { conn ->
+          conn.prepareStatement(queryString).use { statement ->
+            statement.executeQuery().asIterable().map { data ->
+              usedDurations[data.getString(1)] = data.getInt(3)
+            }
+          }
+        }
+      } catch (e: Exception) {
+        respond(
+          HttpStatusCode.InternalServerError,
+          BaseResponse(success = false, message = "Error", null)
+        )
+        return@runBlocking
+      }
+
       val userLeaveAllowances = database.from(LeaveAllowanceEntity)
         .leftJoin(UserEntity, on = UserEntity.id eq LeaveAllowanceEntity.userId)
         .leftJoin(LeaveTypeEntity, on = LeaveTypeEntity.id eq LeaveAllowanceEntity.leaveTypeId)
         .select().limit(pagingRequest.size).offset(pagingRequest.pagingOffset).where {
           (LeaveAllowanceEntity.userId eq userId) and (LeaveAllowanceEntity.deletedFlag neq true)
-        }.orderBy(LeaveAllowanceEntity.id.desc()).map { LeaveAllowance.transform(it, includeUser = includeUser) }
+        }.orderBy(LeaveAllowanceEntity.id.desc()).map {
+          val leaveTypeId = it[LeaveAllowanceEntity.leaveTypeId].toString()
+          LeaveAllowance.transform(it, includeUser = includeUser, usedDuration = usedDurations[leaveTypeId])
+        }
       val message = "User leave allowance list data fetched successfully"
       respond(
         BaseResponse(
@@ -224,6 +248,25 @@ fun ApplicationCall.getUserLeaveAllowance(
 ) {
   runBlocking {
     DBConnection.database?.let { database ->
+      val usedDurations = hashMapOf<String, Int>()
+      val queryString = generateUsedDurationQueryString(userId)
+      try {
+        database.useConnection { conn ->
+          conn.prepareStatement(queryString).use { statement ->
+            statement.executeQuery().asIterable().map { data ->
+              usedDurations[data.getString(1)] = data.getInt(3)
+            }
+          }
+        }
+      } catch (e: Exception) {
+        e.printStackTrace()
+        respond(
+          HttpStatusCode.InternalServerError,
+          BaseResponse(success = false, message = "Error", null)
+        )
+        return@runBlocking
+      }
+
       database.from(LeaveAllowanceEntity)
         .leftJoin(UserEntity, on = UserEntity.id eq LeaveAllowanceEntity.userId)
         .leftJoin(LeaveTypeEntity, on = LeaveTypeEntity.id eq LeaveAllowanceEntity.leaveTypeId)
@@ -233,11 +276,32 @@ fun ApplicationCall.getUserLeaveAllowance(
             (LeaveAllowanceEntity.deletedFlag neq true)
         }
         .orderBy(LeaveAllowanceEntity.id.desc())
-        .map { LeaveAllowance.transform(it, includeUser = includeUser) }
+        .map {
+          LeaveAllowance.transform(it, includeUser = includeUser, usedDuration = usedDurations[leaveTypeId.toString()])
+        }
         .firstOrNull()?.let { userLeaveAllowance ->
           val message = "User leave allowance data fetched successfully"
           respond(BaseResponse(success = true, message = message, data = userLeaveAllowance))
         } ?: run { returnNotFoundResponse() }
     } ?: run { returnFailedDatabaseResponse() }
   }
+}
+
+fun generateUsedDurationQueryString(userId: Int): String {
+  return """
+        select 
+        leave_types.id, leave_types.name, sum(approved_leaves.used_durations) as used_durations
+        from leave_durations
+        left join leave_types on leave_types.id = leave_durations.leave_type_id
+        left join (
+	        select leave_requests.id, leave_requests.leave_type_id , min(leave_approvals.allowed_duration) as used_durations
+	        from leave_requests and leave_requests.status != 'CANCELED'
+	        left join leave_approvals on leave_approvals.leave_request_id = leave_requests.id
+	        where leave_requests.user_id = $userId
+	        group by leave_requests.id
+	        having sum(case when (leave_approvals.status = 'REJECTED') or ((leave_approvals.status = 'PENDING' or leave_approvals.status = 'CANCELED') and leave_requests.start_date <= now()) then 1 else 0 end) = 0
+        ) as approved_leaves on approved_leaves.leave_type_id = leave_types.id
+        where leave_durations.user_id = $userId
+        group by leave_types.id
+      """
 }

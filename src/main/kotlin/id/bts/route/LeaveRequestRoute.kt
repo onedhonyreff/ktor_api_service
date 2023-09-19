@@ -2,11 +2,14 @@ package id.bts.route
 
 import id.bts.database.DBConnection
 import id.bts.entities.*
+import id.bts.model.request.leave_request.SubmittedLeavePagingRequest
 import id.bts.model.response.BaseResponse
+import id.bts.model.response.leave_request.SubmittedLeaveRequest
 import id.bts.model.response.simple_message.SimpleMessage
 import id.bts.utils.DataConstants
 import id.bts.utils.DateTimeUtils.parseToDate
 import id.bts.utils.DateTimeUtils.parseToLocalDate
+import id.bts.utils.Extensions.receivePagingRequest
 import id.bts.utils.Extensions.replaceFileName
 import id.bts.utils.Extensions.returnFailedDatabaseResponse
 import id.bts.utils.Extensions.returnNotImplementedResponse
@@ -23,7 +26,6 @@ import kotlinx.serialization.json.Json
 import org.ktorm.dsl.*
 import java.io.File
 import java.time.LocalDate
-
 
 fun Application.configureLeaveRequestRoute() {
   routing {
@@ -114,7 +116,7 @@ fun Application.configureLeaveRequestRoute() {
                 assignedUserIds.add(hcmId)
               }
 
-            val leaveRequestId = database.insertAndGenerateKey(LeaveRequestEntity) {
+            val leaveRequestId = database.insertAndGenerateKey(SubmittedLeaveRequestEntity) {
               set(it.userId, userId)
               set(it.leaveTypeId, leaveTypeId)
               set(it.startDate, startDate)
@@ -124,6 +126,7 @@ fun Application.configureLeaveRequestRoute() {
               set(it.reason, reason)
               set(it.firstSuperVisorId, firstSuperVisorId)
               set(it.secondSuperVisorId, secondSuperVisorId)
+              set(it.status, DataConstants.SubmittedLeaveRequestStatus.PENDING)
             } as Int?
 
             onGoingProjects?.forEach { onGoingProject ->
@@ -135,7 +138,7 @@ fun Application.configureLeaveRequestRoute() {
 
             assignedUserIds.forEach { assignedUserId ->
               database.insert(LeaveApprovalEntity) {
-                set(it.leaveRequestId, leaveRequestId)
+                set(it.submittedLeaveRequestId, leaveRequestId)
                 set(it.assignedUserId, assignedUserId)
                 set(it.allowedStartDate, startDate)
                 set(it.allowedEndDate, endDate)
@@ -156,6 +159,42 @@ fun Application.configureLeaveRequestRoute() {
           e.printStackTrace()
           call.returnParameterErrorResponse(e.message)
           return@post
+        }
+      }
+
+      post("my-leave-requests") {
+        val userId = try {
+          call.principal<JWTPrincipal>()!!.payload.getClaim("id").asString().toInt()
+        } catch (e: Exception) {
+          call.returnParameterErrorResponse(e.message)
+          return@post
+        }
+
+        val pagingRequest = call.receivePagingRequest<SubmittedLeavePagingRequest>()
+        DBConnection.database?.let { database ->
+          val submittedLeaveRequests = database.from(SubmittedLeaveRequestEntity)
+            .leftJoin(LeaveTypeEntity, on = LeaveTypeEntity.id eq SubmittedLeaveRequestEntity.leaveTypeId)
+            .select().limit(pagingRequest.size).offset(pagingRequest.pagingOffset).where {
+              (SubmittedLeaveRequestEntity.status inList pagingRequest.status) and (SubmittedLeaveRequestEntity.userId eq userId) and (SubmittedLeaveRequestEntity.deletedFlag neq true)
+            }.orderBy(SubmittedLeaveRequestEntity.id.desc()).map { SubmittedLeaveRequest.transform(it) }
+          val message = "List data fetched successfully"
+          call.respond(
+            BaseResponse(
+              success = true,
+              message = message,
+              data = submittedLeaveRequests,
+              totalData = submittedLeaveRequests.size
+            )
+          )
+        } ?: run { call.returnFailedDatabaseResponse() }
+      }
+
+      get("leave-requests/detail/{submittedLeaveRequestId}") {
+        val submittedLeaveRequestId = try {
+          call.parameters["submittedLeaveRequestId"]!!.toInt()
+        } catch (e: Exception) {
+          call.returnParameterErrorResponse(e.message)
+          return@get
         }
       }
     }

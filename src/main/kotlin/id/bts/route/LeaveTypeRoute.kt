@@ -2,6 +2,7 @@ package id.bts.route
 
 import id.bts.database.DBConnection
 import id.bts.entities.LeaveTypeEntity
+import id.bts.model.request.PagingRequest
 import id.bts.model.response.BaseResponse
 import id.bts.model.response.leave_type.LeaveType
 import id.bts.model.response.simple_message.SimpleMessage
@@ -43,12 +44,12 @@ fun Application.configureLeaveTypeRoute() {
       }
 
       post("/leave-types") {
-        val pagingRequest = call.receivePagingRequest()
+        val pagingRequest = call.receivePagingRequest<PagingRequest>()
         DBConnection.database?.let { database ->
           val leaveTypes = database.from(LeaveTypeEntity)
             .select().limit(pagingRequest.size).offset(pagingRequest.pagingOffset).where {
               LeaveTypeEntity.deletedFlag neq true
-            }.orderBy(LeaveTypeEntity.id.desc()).map { LeaveType.transform(it) }
+            }.orderBy(LeaveTypeEntity.id.desc()).map { LeaveType.transform(it) }.filterNotNull()
           val message = "List data fetched successfully"
           call.respond(
             BaseResponse(success = true, message = message, data = leaveTypes, totalData = leaveTypes.size)

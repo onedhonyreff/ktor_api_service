@@ -2,6 +2,7 @@ package id.bts.route
 
 import id.bts.database.DBConnection
 import id.bts.entities.RoleEntity
+import id.bts.model.request.PagingRequest
 import id.bts.model.request.role.RoleRequest
 import id.bts.model.response.BaseResponse
 import id.bts.model.response.role.Role
@@ -40,7 +41,7 @@ fun Application.configureRoleRoute() {
       }
 
       post("/roles") {
-        val pagingRequest = call.receivePagingRequest()
+        val pagingRequest = call.receivePagingRequest<PagingRequest>()
         DBConnection.database?.let { database ->
           val roles = database.from(RoleEntity)
             .select().limit(pagingRequest.size).offset(pagingRequest.pagingOffset).where {
