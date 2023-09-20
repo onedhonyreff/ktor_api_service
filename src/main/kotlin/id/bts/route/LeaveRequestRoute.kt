@@ -1,5 +1,6 @@
 package id.bts.route
 
+import id.bts.NotificationMessaging.PushNotification
 import id.bts.database.DBConnection
 import id.bts.entities.*
 import id.bts.model.request.leave_request.SubmittedLeavePagingRequest
@@ -7,6 +8,8 @@ import id.bts.model.response.BaseResponse
 import id.bts.model.response.leave_approval.LeaveApproval
 import id.bts.model.response.leave_request.SubmittedLeaveRequest
 import id.bts.model.response.leave_type.LeaveType
+import id.bts.model.response.notification.Notification
+import id.bts.model.response.notification.NotificationToken
 import id.bts.model.response.on_going_project.OnGoingProject
 import id.bts.model.response.simple_message.SimpleMessage
 import id.bts.utils.DataConstants
@@ -161,17 +164,34 @@ fun Application.configureLeaveRequestRoute() {
                 (LeaveTypeEntity.id eq leaveTypeId!!) and (LeaveTypeEntity.deletedFlag neq true)
               }.map { LeaveType.transform(it) }.firstOrNull()
 
-              // add notification data
+              // add notification
               val notificationMessage = """
                 Your <b>${leaveType?.name} Request</b> has been <b>sent</b> successfully!
               """.trimIndent()
+              val notificationData = Notification(
+                firstRelationId = leaveRequestId?.toString(),
+                notificationType = DataConstants.NotificationType.LEAVE_REQUEST,
+                message = Regex("<.*?>").replace(notificationMessage, ""),
+                tag = leaveType?.name
+              )
               database.insert(NotificationEntity) {
                 set(it.userId, userId)
-                set(it.firstRelationId, leaveRequestId)
-                set(it.notificationType, DataConstants.NotificationType.LEAVE_REQUEST)
+                set(it.firstRelationId, notificationData.firstRelationId?.toInt())
+                set(it.notificationType, notificationData.notificationType)
                 set(it.message, notificationMessage)
-                set(it.tag, leaveType?.name)
+                set(it.tag, notificationData.tag)
               }
+
+              val notificationTokens = database.from(NotificationTokenEntity).select().where {
+                (NotificationTokenEntity.userId eq userId) and (NotificationTokenEntity.deletedFlag neq true)
+              }.map { NotificationToken.transform(it).notificationToken }.filterNotNull()
+
+              PushNotification.sendMessage(
+                title = DataConstants.NotificationTitle.LEAVE_APPLICATION_SENT,
+                message = notificationData.message.toString(),
+                tokenList = notificationTokens,
+                data = notificationData
+              )
 
               val message = "Successfully added leave request data"
               call.respond(BaseResponse(success = true, message = message, data = SimpleMessage(message)))

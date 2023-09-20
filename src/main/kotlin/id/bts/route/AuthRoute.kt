@@ -5,11 +5,13 @@ import id.bts.entities.*
 import id.bts.manager.TokenManager
 import id.bts.model.request.auth.LoginRequest
 import id.bts.model.request.auth.RegisterRequest
+import id.bts.model.request.notification.NotificationTokenRequest
 import id.bts.model.response.BaseResponse
 import id.bts.model.response.auth.Login
 import id.bts.model.response.simple_message.SimpleMessage
 import id.bts.model.response.user.User
 import id.bts.utils.Extensions.returnFailedDatabaseResponse
+import id.bts.utils.Extensions.returnNotImplementedResponse
 import id.bts.utils.Extensions.returnParameterErrorResponse
 import io.ktor.server.application.*
 import io.ktor.server.request.*
@@ -17,6 +19,7 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import org.ktorm.dsl.*
 import org.mindrot.jbcrypt.BCrypt
+import java.time.Instant
 
 fun Application.configureAuthRoute() {
   routing {
@@ -117,6 +120,37 @@ fun Application.configureAuthRoute() {
         call.returnParameterErrorResponse(e.message)
         return@post
       }
+    }
+
+    post("/logout") {
+      val notificationTokenRequest = try {
+        call.receive<NotificationTokenRequest>()
+      } catch (e: Exception) {
+        call.returnParameterErrorResponse(e.message)
+        return@post
+      }
+
+      DBConnection.database?.let { database ->
+        val isDataExists = database.from(NotificationTokenEntity).select().where {
+          (NotificationTokenEntity.token eq notificationTokenRequest.notificationToken) and (NotificationTokenEntity.deletedFlag neq true)
+        }.totalRecordsInAllPages > 0
+
+        val affected = database.update(NotificationTokenEntity) {
+          set(it.deletedAt, Instant.now())
+          set(it.deletedFlag, true)
+          where {
+            (it.token eq notificationTokenRequest.notificationToken) and (it.deletedFlag neq true)
+          }
+        }
+
+        if (affected == 0 && isDataExists) {
+          call.returnNotImplementedResponse()
+        } else {
+          val message = "Logout successful"
+          call.respond(BaseResponse(success = true, message = message, data = SimpleMessage(message)))
+        }
+
+      } ?: run { call.returnFailedDatabaseResponse() }
     }
   }
 }

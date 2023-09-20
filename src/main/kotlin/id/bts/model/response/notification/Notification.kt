@@ -7,18 +7,18 @@ import org.ktorm.dsl.QueryRowSet
 
 @Serializable
 data class Notification(
-  val id: String?,
+  val id: String? = null,
   @SerialName("user_id")
-  val userId: String?,
+  val userId: String? = null,
   @SerialName("first_relation_id")
-  val firstRelationId: String?,
+  val firstRelationId: String? = null,
   @SerialName("notification_type")
-  val notificationType: String?,
-  val message: String?,
-  val tag: String?,
-  val readed: Boolean?,
+  val notificationType: String? = null,
+  val message: String? = null,
+  val tag: String? = null,
+  val readed: Boolean? = null,
   @SerialName("created_at")
-  val createdAt: String?,
+  val createdAt: String? = null,
 ) {
   companion object {
     fun transform(queryRowSet: QueryRowSet): Notification {

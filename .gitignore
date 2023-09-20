@@ -37,3 +37,4 @@ out/
 
 assets/images/
 src/main/resources/application.conf
+src/main/resources/firebase-admin-sdk.json

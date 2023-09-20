@@ -3,19 +3,16 @@ package id.bts.manager
 import com.auth0.jwt.JWT
 import com.auth0.jwt.JWTVerifier
 import com.auth0.jwt.algorithms.Algorithm
-import com.typesafe.config.ConfigFactory
+import id.bts.config.GlobalConfig
 import id.bts.model.response.auth.Token
 import id.bts.model.response.user.User
-import io.ktor.server.config.*
 import java.util.*
 
 object TokenManager {
-  private val config = HoconApplicationConfig(ConfigFactory.load())
-
-  private val audience = config.property("jwt_audience").getString()
-  private val secret = config.property("jwt_secret").getString()
-  private val issuer = config.property("jwt_issuer").getString()
-  val realm = config.property("jwt_realm").getString()
+  private val audience = GlobalConfig.config.property("jwt_audience").getString()
+  private val secret = GlobalConfig.config.property("jwt_secret").getString()
+  private val issuer = GlobalConfig.config.property("jwt_issuer").getString()
+  val realm = GlobalConfig.config.property("jwt_realm").getString()
   private val expiration: Date
     get() {
       return Calendar.getInstance().also {

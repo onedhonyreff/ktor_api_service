@@ -1,5 +1,6 @@
 package id.bts
 
+import id.bts.plugins.configureFirebase
 import id.bts.plugins.configureJWTMiddleWare
 import id.bts.plugins.configureRouting
 import id.bts.plugins.configureSerialization
@@ -15,5 +16,6 @@ fun main() {
 fun Application.module() {
   configureJWTMiddleWare()
   configureSerialization()
+  configureFirebase()
   configureRouting()
 }

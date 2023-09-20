@@ -1478,6 +1478,129 @@
 							"body": "{\n    \"success\": true,\n    \"message\": \"Token has been successfully refreshed\",\n    \"data\": {\n        \"access_token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJodHRwczovL2xhY2V3aW5nLWh1bW9yb3VzLWFsbGVnZWRseS5uZ3Jvay1mcmVlLmFwcC91c2VyIiwiaXNzIjoiaHR0cHM6Ly9sYWNld2luZy1odW1vcm91cy1hbGxlZ2VkbHkubmdyb2stZnJlZS5hcHAiLCJpZCI6IjUiLCJlbWFpbCI6ImhjbTFAZ21haWwuY29tIiwibmFtZSI6IkhDTSBTYXR1IiwiaXNfc3VwZXJfdmlzb3IiOmZhbHNlLCJpc19oY20iOmZhbHNlLCJpc19yZWZyZXNoX3Rva2VuIjpmYWxzZSwiZXhwIjoxNjk0NjAxMjk2fQ.RlTKZQGUlq7Qf-TLJkf0DAP8xBg5hVfeCyy3vAC_2N0\",\n        \"refresh_token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJodHRwczovL2xhY2V3aW5nLWh1bW9yb3VzLWFsbGVnZWRseS5uZ3Jvay1mcmVlLmFwcC91c2VyIiwiaXNzIjoiaHR0cHM6Ly9sYWNld2luZy1odW1vcm91cy1hbGxlZ2VkbHkubmdyb2stZnJlZS5hcHAiLCJpZCI6IjUiLCJlbWFpbCI6ImhjbTFAZ21haWwuY29tIiwibmFtZSI6IkhDTSBTYXR1IiwiaXNfc3VwZXJfdmlzb3IiOmZhbHNlLCJpc19oY20iOmZhbHNlLCJpc19yZWZyZXNoX3Rva2VuIjp0cnVlfQ.sMyn_-fGvpyVqaiiLptl_g_9bhASNBg3hnUZlZ-JD0I\"\n    }\n}"
 						}
 					]
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"notification_token\": \"cXfYOpaaSXitcQsTR_lDh2:APA91bGFIdPUEw82ByTSUDUgkNF6z3DyEncp9uISfvOhPShKg3vDJ2_MuLcliEMevu2gKQgYzmB6UdMj90E1WKDSYaGRD-V0UNeKUSlQVeyvzn_jG8JqldeEYOC4WvnK38LJXOxwPxtG\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LEAVE_APP_URL}}/logout",
+							"host": [
+								"{{LEAVE_APP_URL}}"
+							],
+							"path": [
+								"logout"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Logout - Success with no match notification token",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"notification_token\": \"\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{LEAVE_APP_URL}}/logout",
+									"host": [
+										"{{LEAVE_APP_URL}}"
+									],
+									"path": [
+										"logout"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Length",
+									"value": "119"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Ngrok-Trace-Id",
+									"value": "3cfec3929bb14666cddef47fcefe0c33"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 20 Sep 2023 03:57:39 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Logout successful\",\n    \"data\": {\n        \"message\": \"Logout successful\"\n    }\n}"
+						},
+						{
+							"name": "Logout - Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"notification_token\": \"cXfYOpaaSXitcQsTR_lDh2:APA91bGFIdPUEw82ByTSUDUgkNF6z3DyEncp9uISfvOhPShKg3vDJ2_MuLcliEMevu2gKQgYzmB6UdMj90E1WKDSYaGRD-V0UNeKUSlQVeyvzn_jG8JqldeEYOC4WvnK38LJXOxwPxtG\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{LEAVE_APP_URL}}/logout",
+									"host": [
+										"{{LEAVE_APP_URL}}"
+									],
+									"path": [
+										"logout"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Length",
+									"value": "119"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Ngrok-Trace-Id",
+									"value": "e47b76015d246f743f0ff2524a439441"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 20 Sep 2023 03:55:01 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Logout successful\",\n    \"data\": {\n        \"message\": \"Logout successful\"\n    }\n}"
+						}
+					]
 				}
 			]
 		},
@@ -10303,6 +10426,139 @@
 								{
 									"key": "Date",
 									"value": "Tue, 19 Sep 2023 07:39:41 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": false,\n    \"message\": \"Expired token or Unauthorized access\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Register Notification Token",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJodHRwczovL2xhY2V3aW5nLWh1bW9yb3VzLWFsbGVnZWRseS5uZ3Jvay1mcmVlLmFwcC91c2VyIiwiaXNzIjoiaHR0cHM6Ly9sYWNld2luZy1odW1vcm91cy1hbGxlZ2VkbHkubmdyb2stZnJlZS5hcHAiLCJpZCI6IjciLCJlbWFpbCI6InVzZXIxQGdtYWlsLmNvbSIsIm5hbWUiOiJVc2VyIFNhdHUgVXBkYXRlZCIsImlzX3N1cGVyX3Zpc29yIjpmYWxzZSwiaXNfaGNtIjpmYWxzZSwiaXNfcmVmcmVzaF90b2tlbiI6ZmFsc2UsImV4cCI6MTY5NTI2ODA0NH0.Po81NV6neulqjVEb8o2HJqGMcKXonIPZb-Xad5RIUaY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"notification_token\": \"cXfYOpaaSXitcQsTR_lDh2:APA91bGFIdPUEw82ByTSUDUgkNF6z3DyEncp9uISfvOhPShKg3vDJ2_MuLcliEMevu2gKQgYzmB6UdMj90E1WKDSYaGRD-V0UNeKUSlQVeyvzn_jG8JqldeEYOC4WvnK38LJXOxwPxtG\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LEAVE_APP_URL}}/notification-token",
+							"host": [
+								"{{LEAVE_APP_URL}}"
+							],
+							"path": [
+								"notification-token"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Register Notification Token - Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"notification_token\": \"cXfYOpaaSXitcQsTR_lDh2:APA91bGFIdPUEw82ByTSUDUgkNF6z3DyEncp9uISfvOhPShKg3vDJ2_MuLcliEMevu2gKQgYzmB6UdMj90E1WKDSYaGRD-V0UNeKUSlQVeyvzn_jG8JqldeEYOC4WvnK38LJXOxwPxtG\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{LEAVE_APP_URL}}/notification-token",
+									"host": [
+										"{{LEAVE_APP_URL}}"
+									],
+									"path": [
+										"notification-token"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Length",
+									"value": "171"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Ngrok-Trace-Id",
+									"value": "c2e0d207901331cdbf685a16d9c98920"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 20 Sep 2023 03:49:46 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Token data has been registered successfully\",\n    \"data\": {\n        \"message\": \"Token data has been registered successfully\"\n    }\n}"
+						},
+						{
+							"name": "Register Notification Token - Unauthorized",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"notification_token\": \"cXfYOpaaSXitcQsTR_lDh2:APA91bGFIdPUEw82ByTSUDUgkNF6z3DyEncp9uISfvOhPShKg3vDJ2_MuLcliEMevu2gKQgYzmB6UdMj90E1WKDSYaGRD-V0UNeKUSlQVeyvzn_jG8JqldeEYOC4WvnK38LJXOxwPxtG\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{LEAVE_APP_URL}}/notification-token",
+									"host": [
+										"{{LEAVE_APP_URL}}"
+									],
+									"path": [
+										"notification-token"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Length",
+									"value": "79"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Ngrok-Trace-Id",
+									"value": "0cd3dd91c35b54aacc410bd1e802263a"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 20 Sep 2023 03:56:00 GMT"
 								}
 							],
 							"cookie": [],

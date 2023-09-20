@@ -1,5 +1,6 @@
 package id.bts.route
 
+import id.bts.NotificationMessaging.PushNotification
 import id.bts.database.DBConnection
 import id.bts.entities.*
 import id.bts.model.request.leave_approval.AssignedApprovalPagingRequest
@@ -9,6 +10,8 @@ import id.bts.model.response.BaseResponse
 import id.bts.model.response.leave_approval.AssignedApproval
 import id.bts.model.response.leave_approval.LeaveApproval
 import id.bts.model.response.leave_type.LeaveType
+import id.bts.model.response.notification.Notification
+import id.bts.model.response.notification.NotificationToken
 import id.bts.model.response.on_going_project.OnGoingProject
 import id.bts.model.response.simple_message.SimpleMessage
 import id.bts.utils.DataConstants
@@ -198,21 +201,41 @@ fun Application.configureLeaveApprovalRoute() {
                 }.firstOrNull()
 
               // add notification data
+              val pushNotificationTitle: String
               val approvedType = if (approvals.all { approval -> approval.allowedDuration == requestedLeaveDuration }) {
+                pushNotificationTitle = DataConstants.NotificationTitle.LEAVE_APPROVAL_APPROVED
                 "<b>Approved All</b> successfully!"
               } else {
+                pushNotificationTitle = DataConstants.NotificationTitle.LEAVE_APPROVAL_APPROVED_PARTIALLY
                 "<b>Approved Partially</b> successful!"
               }
               val notificationMessage = """
                 Your <b>${leaveType?.name} Request</b> has been $approvedType
               """.trimIndent()
+              val notificationData = Notification(
+                firstRelationId = submittedLeaveRequestId.toString(),
+                notificationType = DataConstants.NotificationType.LEAVE_APPROVAL,
+                message = Regex("<.*?>").replace(notificationMessage, ""),
+                tag = leaveType?.name
+              )
               database.insert(NotificationEntity) {
                 set(it.userId, userId)
-                set(it.firstRelationId, submittedLeaveRequestId)
-                set(it.notificationType, DataConstants.NotificationType.LEAVE_APPROVAL)
+                set(it.firstRelationId, notificationData.firstRelationId?.toInt())
+                set(it.notificationType, notificationData.notificationType)
                 set(it.message, notificationMessage)
-                set(it.tag, leaveType?.name)
+                set(it.tag, notificationData.tag)
               }
+
+              val notificationTokens = database.from(NotificationTokenEntity).select().where {
+                (NotificationTokenEntity.userId eq (userId ?: -1)) and (NotificationTokenEntity.deletedFlag neq true)
+              }.map { NotificationToken.transform(it).notificationToken }.filterNotNull()
+
+              PushNotification.sendMessage(
+                title = pushNotificationTitle,
+                message = notificationData.message.toString(),
+                tokenList = notificationTokens,
+                data = notificationData
+              )
             }
 
             val message = "Leave approval has been approved successfully"
@@ -304,17 +327,34 @@ fun Application.configureLeaveApprovalRoute() {
                 LeaveType.transform(it)
               }.firstOrNull()
 
-            // add notification data
+            // add notification
             val notificationMessage = """
                 Your <b>${leaveType?.name} Request</b> has been <b>Rejected</b>
               """.trimIndent()
+            val notificationData = Notification(
+              firstRelationId = submittedLeaveRequestId.toString(),
+              notificationType = DataConstants.NotificationType.LEAVE_APPROVAL,
+              message = Regex("<.*?>").replace(notificationMessage, ""),
+              tag = leaveType?.name
+            )
             database.insert(NotificationEntity) {
               set(it.userId, userId)
-              set(it.firstRelationId, submittedLeaveRequestId)
-              set(it.notificationType, DataConstants.NotificationType.LEAVE_APPROVAL)
+              set(it.firstRelationId, notificationData.firstRelationId?.toInt())
+              set(it.notificationType, notificationData.notificationType)
               set(it.message, notificationMessage)
-              set(it.tag, leaveType?.name)
+              set(it.tag, notificationData.tag)
             }
+
+            val notificationTokens = database.from(NotificationTokenEntity).select().where {
+              (NotificationTokenEntity.userId eq (userId ?: -1)) and (NotificationTokenEntity.deletedFlag neq true)
+            }.map { NotificationToken.transform(it).notificationToken }.filterNotNull()
+
+            PushNotification.sendMessage(
+              title = DataConstants.NotificationTitle.LEAVE_APPROVAL_REJECTED,
+              message = notificationData.message.toString(),
+              tokenList = notificationTokens,
+              data = notificationData
+            )
 
             val message = "Leave approval has been rejected successfully"
             call.respond(BaseResponse(success = true, message = message, data = SimpleMessage(message)))

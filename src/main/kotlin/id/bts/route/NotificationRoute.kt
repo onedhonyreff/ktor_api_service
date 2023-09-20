@@ -2,6 +2,9 @@ package id.bts.route
 
 import id.bts.database.DBConnection
 import id.bts.entities.NotificationEntity
+import id.bts.entities.NotificationTokenEntity
+import id.bts.NotificationMessaging.PushNotification
+import id.bts.model.request.notification.NotificationTokenRequest
 import id.bts.model.request.notification.NotificationPagingRequest
 import id.bts.model.response.BaseResponse
 import id.bts.model.response.notification.Notification
@@ -13,6 +16,7 @@ import id.bts.utils.Extensions.returnParameterErrorResponse
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
 import io.ktor.server.auth.jwt.*
+import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import org.ktorm.dsl.*
@@ -162,6 +166,61 @@ fun Application.configureNotificationRoute() {
           }
         } ?: run { call.returnFailedDatabaseResponse() }
       }
+
+      post("/notification-token") {
+        val userId: Int
+        val notificationTokenRequest: NotificationTokenRequest
+        try {
+          userId = call.principal<JWTPrincipal>()!!.payload.getClaim("id").asString().toInt()
+          notificationTokenRequest = call.receive<NotificationTokenRequest>()
+        } catch (e: Exception) {
+          call.returnParameterErrorResponse(e.message)
+          return@post
+        }
+
+        DBConnection.database?.let { database ->
+          val isDataExists = database.from(NotificationTokenEntity).select().where {
+            (NotificationTokenEntity.userId eq userId) and (NotificationTokenEntity.token eq notificationTokenRequest.notificationToken) and (NotificationTokenEntity.deletedFlag neq true)
+          }.totalRecordsInAllPages > 0
+
+          if (isDataExists) {
+            call.respond(BaseResponse(success = true, message = "Success", data = SimpleMessage("Success")))
+            return@post
+          }
+
+          val affected = database.insert(NotificationTokenEntity) {
+            set(it.userId, userId)
+            set(it.token, notificationTokenRequest.notificationToken)
+          }
+          if (affected == 0) {
+            call.returnNotImplementedResponse()
+          } else {
+            val message = "Token data has been registered successfully"
+            call.respond(BaseResponse(success = true, message = message, data = SimpleMessage(message)))
+          }
+
+        } ?: run { call.returnFailedDatabaseResponse() }
+      }
+    }
+
+    get("/push-notification/{title}/{message}") {
+      val title: String
+      val message: String
+      try {
+        title = call.parameters["title"]!!
+        message = call.parameters["message"]!!
+      } catch (e: Exception) {
+        call.returnParameterErrorResponse(e.message)
+        return@get
+      }
+
+      val token =
+        "cXfYOpaaSXitcQsTR_lDh2:APA91bGFIdPUEw82ByTSUDUgkNF6z3DyEncp9uISfvOhPShKg3vDJ2_MuLcliEMevu2gKQgYzmB6UdMj90E1WKDSYaGRD-V0UNeKUSlQVeyvzn_jG8JqldeEYOC4WvnK38LJXOxwPxtG"
+
+      PushNotification.sendMessage(title, message, tokenList = listOf(token), data = "wkwkw")
+
+      val responseMessage = "Notification has been sent!"
+      call.respond(BaseResponse(success = true, message = responseMessage, data = SimpleMessage(responseMessage)))
     }
   }
 }
