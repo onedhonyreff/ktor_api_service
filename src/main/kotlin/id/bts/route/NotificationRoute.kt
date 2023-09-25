@@ -3,7 +3,7 @@ package id.bts.route
 import id.bts.database.DBConnection
 import id.bts.entities.NotificationEntity
 import id.bts.entities.NotificationTokenEntity
-import id.bts.NotificationMessaging.PushNotification
+import id.bts.notification_messaging.PushNotification
 import id.bts.model.request.notification.NotificationTokenRequest
 import id.bts.model.request.notification.NotificationPagingRequest
 import id.bts.model.response.BaseResponse

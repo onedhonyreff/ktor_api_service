@@ -1,4 +1,4 @@
-package id.bts.NotificationMessaging
+package id.bts.notification_messaging
 
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.Message

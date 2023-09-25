@@ -1,6 +1,6 @@
 package id.bts.route
 
-import id.bts.NotificationMessaging.PushNotification
+import id.bts.notification_messaging.PushNotification
 import id.bts.database.DBConnection
 import id.bts.entities.*
 import id.bts.model.request.leave_approval.AssignedApprovalPagingRequest
