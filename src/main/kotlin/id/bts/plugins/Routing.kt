@@ -26,4 +26,5 @@ fun Application.configureRouting() {
   configureLeaveRequestRoute()
   configureLeaveApprovalRoute()
   configureNotificationRoute()
+  configureWebSocketRouting()
 }

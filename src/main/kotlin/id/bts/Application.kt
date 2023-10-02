@@ -1,10 +1,7 @@
 package id.bts
 
 import id.bts.config.GlobalConfig
-import id.bts.plugins.configureFirebase
-import id.bts.plugins.configureJWTMiddleWare
-import id.bts.plugins.configureRouting
-import id.bts.plugins.configureSerialization
+import id.bts.plugins.*
 import io.ktor.server.application.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
@@ -22,5 +19,6 @@ fun Application.module() {
   configureJWTMiddleWare()
   configureSerialization()
   configureFirebase()
+  configureWebSockets()
   configureRouting()
 }
