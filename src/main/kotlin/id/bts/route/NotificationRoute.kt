@@ -202,25 +202,5 @@ fun Application.configureNotificationRoute() {
         } ?: run { call.returnFailedDatabaseResponse() }
       }
     }
-
-    get("/push-notification/{title}/{message}") {
-      val title: String
-      val message: String
-      try {
-        title = call.parameters["title"]!!
-        message = call.parameters["message"]!!
-      } catch (e: Exception) {
-        call.returnParameterErrorResponse(e.message)
-        return@get
-      }
-
-      val token =
-        "cXfYOpaaSXitcQsTR_lDh2:APA91bGFIdPUEw82ByTSUDUgkNF6z3DyEncp9uISfvOhPShKg3vDJ2_MuLcliEMevu2gKQgYzmB6UdMj90E1WKDSYaGRD-V0UNeKUSlQVeyvzn_jG8JqldeEYOC4WvnK38LJXOxwPxtG"
-
-      PushNotification.sendMessage(title, message, tokenList = listOf(token), data = "wkwkw")
-
-      val responseMessage = "Notification has been sent!"
-      call.respond(BaseResponse(success = true, message = responseMessage, data = SimpleMessage(responseMessage)))
-    }
   }
 }

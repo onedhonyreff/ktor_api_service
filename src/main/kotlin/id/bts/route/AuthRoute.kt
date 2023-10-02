@@ -8,9 +8,11 @@ import id.bts.model.request.auth.RegisterRequest
 import id.bts.model.request.notification.NotificationTokenRequest
 import id.bts.model.response.BaseResponse
 import id.bts.model.response.auth.Login
+import id.bts.model.response.role.Role
 import id.bts.model.response.simple_message.SimpleMessage
 import id.bts.model.response.user.User
 import id.bts.utils.Extensions.returnFailedDatabaseResponse
+import id.bts.utils.Extensions.returnNotFoundResponse
 import id.bts.utils.Extensions.returnNotImplementedResponse
 import id.bts.utils.Extensions.returnParameterErrorResponse
 import io.ktor.server.application.*
@@ -150,6 +152,31 @@ fun Application.configureAuthRoute() {
           call.respond(BaseResponse(success = true, message = message, data = SimpleMessage(message)))
         }
 
+      } ?: run { call.returnFailedDatabaseResponse() }
+    }
+
+    post("/forgot-password") {
+      val email = try {
+        call.request.queryParameters["email"]!!
+      } catch (e: Exception) {
+        call.returnParameterErrorResponse(e.message)
+        return@post
+      }
+
+      DBConnection.database?.let { database ->
+        val isUserExists = database.from(UserEntity).select().where {
+          (UserEntity.email eq email) and (UserEntity.deletedFlag neq true)
+        }.totalRecordsInAllPages > 0
+
+        if (!isUserExists) {
+          call.returnNotFoundResponse("Email not registered. Try to check your email address.")
+        } else {
+
+          // TODO send email message include OTP number for requested email.
+
+          val message = "We have sent an OTP code. Check the message in your email to reset your account password."
+          call.respond(BaseResponse(success = true, message = message, data = SimpleMessage(message)))
+        }
       } ?: run { call.returnFailedDatabaseResponse() }
     }
   }
