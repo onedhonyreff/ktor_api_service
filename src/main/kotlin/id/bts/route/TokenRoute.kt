@@ -57,7 +57,7 @@ fun Application.configureTokenRoute() {
       val userId: Int
       try {
         oldToken = call.receive<Token>()
-        val decodedToken = TokenManager.createJWTVerifier().verify(oldToken.refreshToken)
+        val decodedToken = TokenManager.decode(oldToken.refreshToken!!, TokenManager.secret)
         isRefreshToken = decodedToken.getClaim("is_refresh_token").asBoolean()
         userId = decodedToken.getClaim("id").asString().toInt()
       } catch (e: Exception) {
