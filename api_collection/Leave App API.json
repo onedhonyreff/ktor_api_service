@@ -10918,7 +10918,14 @@
 					"name": "Change Password",
 					"request": {
 						"auth": {
-							"type": "noauth"
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJodHRwczovL2xhY2V3aW5nLWh1bW9yb3VzLWFsbGVnZWRseS5uZ3Jvay1mcmVlLmFwcC91c2VyIiwiaXNzIjoiaHR0cHM6Ly9sYWNld2luZy1odW1vcm91cy1hbGxlZ2VkbHkubmdyb2stZnJlZS5hcHAiLCJpZCI6IjciLCJlbWFpbCI6InVzZXIxQGdtYWlsLmNvbSIsIm5hbWUiOiJVc2VyIFNhdHUgVXBkYXRlZCIsImlzX3N1cGVyX3Zpc29yIjpmYWxzZSwiaXNfaGNtIjpmYWxzZSwiaXNfcmVmcmVzaF90b2tlbiI6ZmFsc2UsImV4cCI6MTY5NzE2NTg0N30.8_QndGcRLMRXTnJLFZrpv87rqwr4EsDD05dnEjF_i9g",
+									"type": "string"
+								}
+							]
 						},
 						"method": "PUT",
 						"header": [],
