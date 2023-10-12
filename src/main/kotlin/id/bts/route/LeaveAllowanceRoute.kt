@@ -294,14 +294,14 @@ fun generateUsedDurationQueryString(userId: Int): String {
         from leave_durations
         left join leave_types on leave_types.id = leave_durations.leave_type_id
         left join (
-	        select leave_requests.id, leave_requests.leave_type_id , min(leave_approvals.allowed_duration) as used_durations
-	        from leave_requests and leave_requests.status != 'CANCELED'
+	        select leave_requests.id, leave_requests.leave_type_id, min(leave_approvals.allowed_duration) as used_durations
+	        from leave_requests
 	        left join leave_approvals on leave_approvals.leave_request_id = leave_requests.id
-	        where leave_requests.user_id = $userId
+	        where leave_requests.user_id = $userId and leave_requests.status != 'CANCELED'
 	        group by leave_requests.id
 	        having sum(case when (leave_approvals.status = 'REJECTED') or ((leave_approvals.status = 'PENDING' or leave_approvals.status = 'CANCELED') and leave_requests.start_date <= now()) then 1 else 0 end) = 0
         ) as approved_leaves on approved_leaves.leave_type_id = leave_types.id
-        where leave_durations.user_id = $userId
+        where leave_durations.user_id = $userId 
         group by leave_types.id
       """
 }
