@@ -19,6 +19,7 @@ fun Application.configureRouting() {
   configureLeaveTypeRoute()
   configureAuthRoute()
   configureUserPasswordRoute()
+  configureOtpRoute()
   configureLeaveAllowanceRoute()
   configureTokenRoute()
   configureHCMRoute()
